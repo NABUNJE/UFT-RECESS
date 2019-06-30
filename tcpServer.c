@@ -48,7 +48,7 @@ int main(){
 	}
 
 
-	while(1){
+	while(1){	
 		newSocket = accept(sockfd, (struct sockaddr*)&newAddr, &addr_size);
 		if(newSocket < 0){
 			exit(1);
@@ -59,69 +59,36 @@ int main(){
 			close(sockfd);
 
 			while(1){
+				bzero(buffer, sizeof(buffer));
 				recv(newSocket, buffer, 1024, 0);
-                
-				int check = 0;
-				char delim[] = " ";
-				char *ptr = strtok(buffer, delim);	
-				int i = 0;
-				char *ptx[10];
 
-				while(ptr!=NULL){							
-					ptx[i] = ptr;
-					i++;
-					ptr = strtok(NULL,delim);
+				if(strcmp(buffer, "Addmember") == 0){
+					printf("Addmember \n");
+					//recv(newSocket, buffer, 1024, 0);
 				}
-				
+				else if(strcmp(buffer, "search") == 0){
 
-				if(strcmp(ptx[0],"Addmember")==0){
-					         if(i < 2){
-								 buffer[0] = *ptx[0];
-								 send(newSocket, buffer, strlen(buffer), 0);
-								 bzero(buffer, sizeof(buffer));
-							 }
-							 else{
-								 memberAdd();
-							 }
 				}
-				else if(strcmp(ptx[0],"Check_status")==0){
-					status();
+				else if(strcmp(buffer, "check_status") == 0){
+
 				}
-				else if(strcmp(ptx[0],"get_statement")==0){
-					statement();
+				else if(strcmp(buffer, "get_statement") == 0){
+					printf("statement");
 				}
-				else if(strcmp(ptx[0],"search")==0){
-					search();
-				}
-				else if(strcmp(ptx[0],":exit")==0){
+
+				else if(strcmp(buffer, "exit") == 0){
 					printf("Disconnected from %s:%d\n", inet_ntoa(newAddr.sin_addr), ntohs(newAddr.sin_port));
-					break;
 				}
-				else{
-					buffer[1024] = "UNKNOWN COMMAND!!!! ";//error here
-					send(newSocket, buffer, strlen(buffer), 0);
+		        /* else{
+				send(newSocket, buffer, strlen(buffer), 0);
 				}
-
-
-				
+				*/
 			}
-		
-				
 		}
 
 	}
 
-
 	close(newSocket);
+
 	return 0;
-
-
 }
-
-
-        
-
-	
-
-
-	

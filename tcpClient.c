@@ -35,22 +35,44 @@ int main(){
 	printf("[+]Connected to Server.\n");
 
 	while(1){
-		printf("Client: \t");
+		bzero(buffer,sizeof(buffer));
+		printf("COMMAND:-> \t");
 		scanf("%s", &buffer[0]);
-		send(clientSocket, buffer, strlen(buffer), 0);
 
-		if(strcmp(buffer, ":exit") == 0){
+		if(strcmp(buffer, "exit") == 0){
+			send(clientSocket, buffer, strlen(buffer), 0);
 			close(clientSocket);
 			printf("[-]Disconnected from server.\n");
 			exit(1);
 		}
-
-		if(recv(clientSocket, buffer, 1024, 0) < 0){
-			printf("[-]Error in receiving data.\n");
-		}else{
-			printf("Server: \t%s\n", buffer);
+		else if(strcmp(buffer, "Addmember") == 0){
+			send(clientSocket, buffer, strlen(buffer), 0);
+			bzero(buffer,sizeof(buffer));
+			scanf("%s", &buffer[0]);
+			
+					//to be continued
 		}
-	}
+		else if(strcmp(buffer, "search") == 0){
+			send(clientSocket, buffer, strlen(buffer), 0);
+					//search module
+		}
+		else if(strcmp(buffer, "check_status") == 0){
+			send(clientSocket, buffer, strlen(buffer), 0);
+			//check module
 
+		}
+		else if(strcmp(buffer, "get_statement") == 0){
+			send(clientSocket, buffer, strlen(buffer), 0);
+			//statement check
+		}
+		else{
+			printf("[-]ERROR: INVALID COMMAND \n");
+		}
+
+        //recv(clientSocket, buffer, 1024, 0);
+		//	printf("[-]Error in receiving data.\n");
+ 
+
+	}
 	return 0;
 }
