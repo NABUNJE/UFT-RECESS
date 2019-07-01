@@ -70,36 +70,39 @@ int main(){
 			char *file = buffer;
 			ltrim(file);//trimming
 			FILE *fp;
-			int words =0;
+			int words = 0;
 			char c;
-			fp =fopen(file,"r");
+			fp =fopen(file, "r");
 			if(fp == NULL){
 				send(clientSocket,buffer,1024,0);
 			}
 			else{  
+				bzero(buffer,sizeof(buffer));
 				file = "file";
 				send(clientSocket,file,sizeof(file),0);
 				while((c = getc(fp)) != EOF){
 					fscanf(fp,"%s",buffer);
 					if(isspace(c) || c =='\t'){
-						words++;
+					words++;
 					}
-					
 				}
-				send(clientSocket, &words, sizeof(int),0);
+				int conwords= htonl(words);
+				send(clientSocket, &conwords, sizeof(conwords),0);
+				printf("%d\n",words);
 				rewind(fp);
 
 				char ch;
 				while(ch != EOF){
 					fscanf(fp,"%s",buffer);
+					printf("%s'n",buffer);
 					send(clientSocket,buffer,1024,0);
 		 			ch = fgetc(fp);
 				}
                printf("sent successfully\n");
 
 			}
-				
-		}
+		}	
+		
 		else if(strcmp(buffer, "search") == 0){
 			send(clientSocket, buffer, strlen(buffer), 0);
 					//search module

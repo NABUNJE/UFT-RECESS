@@ -70,26 +70,28 @@ int main(){
 			close(sockfd);
 
 			while(1){
-				int read = recv(newSocket,buffer,1024,0);
-		        buffer[read] = '\0';
+				int readx = recv(newSocket,buffer,1024,0);
+		        buffer[readx] = '\0';
 
 				if(strcmp(buffer, "Addmember") == 0){
-					read = recv(newSocket,buffer,1024,0);
-					buffer[read] = '\0';
+					readx = recv(newSocket,buffer,1024,0);
+					buffer[readx] = '\0';
 					if(strcmp(buffer,"file") ==0){
+						bzero(buffer,sizeof(buffer));
 						FILE *fp;
-						int ch =0;
+						int ch = 0;
+						int word =0;
 						fp =fopen("hello.txt","a");
-						int words;
-
-						recv(newSocket,&words,sizeof(int),0);
-
+						recv(newSocket, &word, sizeof(word),0);
+						int words = ntohl(word);
 						while(ch != words){
 							recv(newSocket,buffer,1024,0);
-							fprintf(fp,"%s",buffer);
+							fprintf(fp, "%s" ,buffer);
+							printf("%s : %d",buffer,ch);
 							ch++;
 						}
 						fputs("\n",fp);
+						printf("file received \n");
 
 
 					}
