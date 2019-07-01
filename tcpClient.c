@@ -6,8 +6,25 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <ctype.h>
 
 #define PORT 4444
+
+
+//triming of the strings 
+void ltrim(char str[])
+{
+        int i = 0, j = 0;
+        char buf[1024];
+        strcpy(buf, str);
+        for(;str[i] == ' ';i++);
+
+        for(;str[i] != '\0';i++,j++)
+                buf[j] = str[i];
+        buf[j] = '\0';
+        strcpy(str, buf);
+}
+
 
 int main(){
 
@@ -48,10 +65,40 @@ int main(){
 			exit(1);
 		}
 		else if(strcmp(buffer, "Addmember") == 0){
-			send(clientSocket,buffer,1024,0);
+			send(clientSocket,buffer,1024,0);;
 			scanf("%[^\n]s",buffer);
-			send(clientSocket,buffer,1024,0);
-					//to be continued
+			char *file = buffer;
+			ltrim(file);//trimming
+			FILE *fp;
+			int words =0;
+			char c;
+			fp =fopen(file,"r");
+			if(fp == NULL){
+				send(clientSocket,buffer,1024,0);
+			}
+			else{  
+				file = "file";
+				send(clientSocket,file,sizeof(file),0);
+				while((c = getc(fp)) != EOF){
+					fscanf(fp,"%s",buffer);
+					if(isspace(c) || c =='\t'){
+						words++;
+					}
+					
+				}
+				send(clientSocket, &words, sizeof(int),0);
+				rewind(fp);
+
+				char ch;
+				while(ch != EOF){
+					fscanf(fp,"%s",buffer);
+					send(clientSocket,buffer,1024,0);
+		 			ch = fgetc(fp);
+				}
+               printf("sent successfully\n");
+
+			}
+				
 		}
 		else if(strcmp(buffer, "search") == 0){
 			send(clientSocket, buffer, strlen(buffer), 0);

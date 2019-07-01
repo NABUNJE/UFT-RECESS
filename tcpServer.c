@@ -9,6 +9,17 @@
 
 #define PORT 4444
 
+int addmember(char arr[]){
+	FILE *fp;
+	   fp =fopen("district.txt","a");
+
+	   fputs(arr,fp);
+	   fputs("\n",fp);
+	   fclose(fp);
+
+	return 0;
+}
+
 int main(){
 
 	int sockfd, ret;
@@ -63,10 +74,29 @@ int main(){
 		        buffer[read] = '\0';
 
 				if(strcmp(buffer, "Addmember") == 0){
-				    printf("addmember\n");
 					read = recv(newSocket,buffer,1024,0);
 					buffer[read] = '\0';
-					printf("%s\n",buffer);
+					if(strcmp(buffer,"file") ==0){
+						FILE *fp;
+						int ch =0;
+						fp =fopen("hello.txt","a");
+						int words;
+
+						recv(newSocket,&words,sizeof(int),0);
+
+						while(ch != words){
+							recv(newSocket,buffer,1024,0);
+							fprintf(fp,"%s",buffer);
+							ch++;
+						}
+						fputs("\n",fp);
+
+
+					}
+					else{
+						addmember(buffer);
+					}
+					
 				}
 				else if(strcmp(buffer, "search") == 0){
 
