@@ -13,7 +13,7 @@ int main(){
 
 	int clientSocket, ret;
 	struct sockaddr_in serverAddr;
-	char buffer[1024];
+	
 
 	clientSocket = socket(AF_INET, SOCK_STREAM, 0);
 	if(clientSocket < 0){
@@ -35,6 +35,8 @@ int main(){
 	printf("[+]Connected to Server.\n");
 
 	while(1){
+		char buffer[1024];
+
 		bzero(buffer,sizeof(buffer));
 		printf("COMMAND:-> \t");
 		scanf("%s", &buffer[0]);
@@ -46,10 +48,9 @@ int main(){
 			exit(1);
 		}
 		else if(strcmp(buffer, "Addmember") == 0){
-			send(clientSocket, buffer, strlen(buffer), 0);
-			bzero(buffer,sizeof(buffer));
-			scanf("%s", &buffer[0]);
-			
+			send(clientSocket,buffer,1024,0);
+			scanf("%[^\n]s",buffer);
+			send(clientSocket,buffer,1024,0);
 					//to be continued
 		}
 		else if(strcmp(buffer, "search") == 0){

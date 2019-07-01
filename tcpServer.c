@@ -59,12 +59,14 @@ int main(){
 			close(sockfd);
 
 			while(1){
-				bzero(buffer, sizeof(buffer));
-				recv(newSocket, buffer, 1024, 0);
+				int read = recv(newSocket,buffer,1024,0);
+		        buffer[read] = '\0';
 
 				if(strcmp(buffer, "Addmember") == 0){
-					printf("Addmember \n");
-					//recv(newSocket, buffer, 1024, 0);
+				    printf("addmember\n");
+					read = recv(newSocket,buffer,1024,0);
+					buffer[read] = '\0';
+					printf("%s\n",buffer);
 				}
 				else if(strcmp(buffer, "search") == 0){
 
@@ -73,12 +75,13 @@ int main(){
 
 				}
 				else if(strcmp(buffer, "get_statement") == 0){
-					printf("statement");
+					printf("statement\n");
 				}
 
 				else if(strcmp(buffer, "exit") == 0){
 					printf("Disconnected from %s:%d\n", inet_ntoa(newAddr.sin_addr), ntohs(newAddr.sin_port));
 				}
+			
 		        /* else{
 				send(newSocket, buffer, strlen(buffer), 0);
 				}
