@@ -6,18 +6,35 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <ctype.h>
+
 
 #define PORT 4444
 
-int addmember(char arr[]){
+int addmember(char arr[],char dis[]){
 	FILE *fp;
-	   fp =fopen("district.txt","a");
+	   fp =fopen(strcat(dis,".txt"),"a");
 
 	   fputs(arr,fp);
 	   fputs("\n",fp);
 	   fclose(fp);
 
 	return 0;
+}
+
+
+//triming of the strings 
+void ltrim(char str[])
+{
+        int i = 0, j = 0;
+        char buf[1024];
+        strcpy(buf, str);
+        for(;str[i] == ' ';i++);
+
+        for(;str[i] != '\0';i++,j++)
+                buf[j] = str[i];
+        buf[j] = '\0';
+        strcpy(str, buf);
 }
 
 int main(){
@@ -70,33 +87,38 @@ int main(){
 			close(sockfd);
 
 			while(1){
+				char district[1024];
+				char user[1024];
+
 				int readx = recv(newSocket,buffer,1024,0);
 		        buffer[readx] = '\0';
 
 				if(strcmp(buffer, "Addmember") == 0){
+					recv(newSocket,district,1024,0);
 					readx = recv(newSocket,buffer,1024,0);
 					buffer[readx] = '\0';
 					if(strcmp(buffer,"file") ==0){
 						bzero(buffer,sizeof(buffer));
 						FILE *fp;
 						int ch = 0;
-						int word =0;
-						fp =fopen("hello.txt","a");
-						recv(newSocket, &word, sizeof(word),0);
-						int words = ntohl(word);
+						char filex[1024];
+						fp =fopen(strcat(district,".txt"),"a");
+						recv(newSocket, filex, sizeof(filex),0);
+						int words = atoi(filex); //string to int conversion
+						printf("%d",words);
 						while(ch != words){
 							recv(newSocket,buffer,1024,0);
-							fprintf(fp, "%s" ,buffer);
+							fprintf(fp, "%s " ,buffer);
 							printf("%s : %d",buffer,ch);
 							ch++;
 						}
 						fputs("\n",fp);
-						printf("file received \n");
+						fclose(fp);
 
 
 					}
 					else{
-						addmember(buffer);
+						addmember(buffer,district);
 					}
 					
 				}
@@ -104,6 +126,12 @@ int main(){
 
 				}
 				else if(strcmp(buffer, "check_status") == 0){
+					bzero(buffer,sizeof(buffer));
+					recv(newSocket,district, sizeof(district),0);
+					recv(newSocket, user, sizeof(user),0);
+					
+
+					
 
 				}
 				else if(strcmp(buffer, "get_statement") == 0){
