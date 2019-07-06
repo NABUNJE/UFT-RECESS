@@ -20,7 +20,7 @@ class Agent extends Model
     use SoftDeletes;
 
     public $table = 'agents';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -60,5 +60,19 @@ class Agent extends Model
         'signature' => 'required'
     ];
 
-    
+    public function district(){
+        return $this->belongsTo('App/Models/District');
+    }
+    public function member(){
+        return $this->hasMany('App/Modes/Member');
+
+    }
+    public function payment(){
+        return $this -> hasMany('App/Model/Payment');
+    }
+    public function Administrator(){
+        return $this->belongsTo('App/Model/Administrator');
+    }
+
+
 }

@@ -22,3 +22,7 @@
     <a href="{!! route('members.index') !!}"><i class="fa fa-edit"></i><span>Members</span></a>
 </li>
 
+<li class="{{ Request::is('administrators*') ? 'active' : '' }}">
+    <a href="{!! route('administrators.index') !!}"><i class="fa fa-edit"></i><span>Administrators</span></a>
+</li>
+

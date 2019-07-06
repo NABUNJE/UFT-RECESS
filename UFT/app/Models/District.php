@@ -18,7 +18,7 @@ class District extends Model
     use SoftDeletes;
 
     public $table = 'districts';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -51,5 +51,12 @@ class District extends Model
         'name' => 'required'
     ];
 
-    
+    public function agent(){
+        return $this->hasMany('App/Models/Agent');
+    }
+    public function member(){
+        return $this->hasMany('App/Models/Member');
+    }
+
+
 }

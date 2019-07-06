@@ -22,7 +22,7 @@ class Member extends Model
     use SoftDeletes;
 
     public $table = 'members';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -65,6 +65,9 @@ class Member extends Model
         'gender' => 'required',
         'agent' => 'required'
     ];
+    public function agent(){
+        $this->belongsTo('App/Models/Agent');
+    }
 
-    
+
 }

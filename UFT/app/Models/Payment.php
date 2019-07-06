@@ -18,7 +18,7 @@ class Payment extends Model
     use SoftDeletes;
 
     public $table = 'payments';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -51,5 +51,10 @@ class Payment extends Model
         'amount' => 'required'
     ];
 
-    
+    public function agent(){
+        return $this->belongsTo('App/Models/Agent');
+    }
+    public function administrator(){
+        return $this->belongsTo('App/Models/Administrator');
+    }
 }

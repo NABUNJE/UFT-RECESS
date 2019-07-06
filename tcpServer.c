@@ -11,6 +11,7 @@
 
 #define PORT 4444
 
+
 int addmember(char arr[],char dis[]){
 	FILE *fp;
 	   fp =fopen(strcat(dis,".txt"),"a");
@@ -109,7 +110,6 @@ int main(){
 						while(ch != words){
 							recv(newSocket,buffer,1024,0);
 							fprintf(fp, "%s " ,buffer);
-							printf("%s : %d",buffer,ch);
 							ch++;
 						}
 						fputs("\n",fp);
@@ -123,14 +123,44 @@ int main(){
 					
 				}
 				else if(strcmp(buffer, "search") == 0){
+					recv(newSocket,district,1024,0);
+					readx = recv(newSocket,buffer,1024,0);
+					buffer[readx] = '\0';
+					
+					printf("%s\n",district);
+					   //call the search module
+	    				FILE *fptr;
+						char pitem[1024];
+
+						fptr = fopen(strcat(district,".txt"),"r");
+ 
+						if(fptr ==NULL){
+							printf("file not found \n");
+							exit(EXIT_FAILURE);
+						}
+
+						while(fgets(pitem,1024,fptr)!=NULL){
+							int totalRead = strlen(pitem);
+
+							pitem[totalRead - 1] = pitem[totalRead - 1] == '\n' ? '\0' : pitem[totalRead - 1];
+
+							if(strstr(pitem,buffer)!=NULL){
+								printf("%s\n",pitem);
+
+								send(newSocket,pitem,sizeof(pitem),0);
+					
+							}
+
+						}
+						char *fin ="complete";
+						send(newSocket,fin,sizeof(fin),0);
+
 
 				}
 				else if(strcmp(buffer, "check_status") == 0){
 					bzero(buffer,sizeof(buffer));
 					recv(newSocket,district, sizeof(district),0);
 					recv(newSocket, user, sizeof(user),0);
-					
-
 					
 
 				}
