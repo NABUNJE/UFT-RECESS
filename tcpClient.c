@@ -86,7 +86,7 @@ int main(){
 	char user[1024];
     printf("\nENTER DISTRICT:\t");
 	scanf("%s",district);
-	printf("\n ENTER USER NAME:\t");
+	printf("\nENTER USER NAME:");
     scanf("%s",user);
 	while(1){
 		char buffer[1024];
@@ -129,13 +129,11 @@ int main(){
 				char size[1024];
 				sprintf(size,"%d",words);//int to string convertion
 				send(clientSocket, size, sizeof(size),0);
-				printf("%d\n",words);
 				rewind(fp);
 
 				char ch;
 				while(ch != EOF){
 					fscanf(fp,"%s",buffer);
-					printf("%s\n",buffer);
 					send(clientSocket,buffer,1024,0);
 		 			ch = fgetc(fp);
 				}
@@ -148,11 +146,27 @@ int main(){
 		else if(strcmp(buffer, "search") == 0){
 			send(clientSocket, buffer, strlen(buffer), 0);
 			scanf("%s",buffer);
+			ltrim(buffer);
+			send(clientSocket,district,sizeof(district),0);
 			send(clientSocket, buffer, strlen(buffer), 0);
             bzero(buffer,sizeof(buffer));
 
+			printf("%s\n",district);
+			printf("hix\n");
 			//receive search data from the server
 			recv(clientSocket,buffer,strlen(buffer),0);
+
+			while(1){
+				printf("loop\n");
+				recv(clientSocket,buffer,strlen(buffer),0);
+				if(strcmp(buffer,"complete")){
+					printf("break hit\n");
+					break;
+					
+				}  
+				printf("%s\n",buffer);
+			}
+			
 			
 		}
 		else if(strcmp(buffer, "check_status") == 0){
