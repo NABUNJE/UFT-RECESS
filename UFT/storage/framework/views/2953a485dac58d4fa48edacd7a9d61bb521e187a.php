@@ -22,4 +22,8 @@
     <a href="<?php echo route('members.index'); ?>"><i class="fa fa-edit"></i><span>Members</span></a>
 </li>
 
+<li class="<?php echo e(Request::is('administrators*') ? 'active' : ''); ?>">
+    <a href="<?php echo route('administrators.index'); ?>"><i class="fa fa-edit"></i><span>Administrators</span></a>
+</li>
+
 <?php /**PATH /home/hix/UFT-RECESS/UFT/resources/views/layouts/menu.blade.php ENDPATH**/ ?>

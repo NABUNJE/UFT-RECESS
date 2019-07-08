@@ -11,6 +11,7 @@
 </div>
 
 <!-- Received-On Field -->
+
 <div class="form-group col-sm-6">
     {!! Form::label('received-on', 'Received-On:') !!}
     {!! Form::date('received-on', null, ['class' => 'form-control','id'=>'received-on']) !!}
@@ -20,7 +21,7 @@
     <script type="text/javascript">
         $('#received-on').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
-            useCurrent: false
+            useCurrent: true
         })
     </script>
 @endsection
