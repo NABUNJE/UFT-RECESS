@@ -7,15 +7,28 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <ctype.h>
+#include <time.h>
+
 
 
 #define PORT 4444
 
+<<<<<<< HEAD
 
 int addmember(char arr[],char dis[]){
+=======
+int currdate(char timex[]){
+    time_t t = time(NULL);
+    struct tm *tm = localtime(&t);
+    strftime(timex,1024,"%d/%m/%y",tm);
+	return 0;
+}
+
+int addmember(char arr[],char dis[],char dater[]){
+>>>>>>> 374640dc7e0d22faaa6a363b7d40312a6e58453b
 	FILE *fp;
 	   fp =fopen(strcat(dis,".txt"),"a");
-
+       arr = strcat(arr,dater);
 	   fputs(arr,fp);
 	   fputs("\n",fp);
 	   fclose(fp);
@@ -91,6 +104,10 @@ int main(){
 				char district[1024];
 				char user[1024];
 
+				char cdate[1024];
+
+				currdate(cdate);
+
 				int readx = recv(newSocket,buffer,1024,0);
 		        buffer[readx] = '\0';
 
@@ -118,7 +135,7 @@ int main(){
 
 					}
 					else{
-						addmember(buffer,district);
+						addmember(buffer,district,cdate);
 					}
 					
 				}
@@ -126,7 +143,10 @@ int main(){
 					recv(newSocket,district,1024,0);
 					readx = recv(newSocket,buffer,1024,0);
 					buffer[readx] = '\0';
+<<<<<<< HEAD
 					
+=======
+>>>>>>> 374640dc7e0d22faaa6a363b7d40312a6e58453b
 					printf("%s\n",district);
 					   //call the search module
 	    				FILE *fptr;
