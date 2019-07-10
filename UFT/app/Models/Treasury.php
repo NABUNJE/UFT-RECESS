@@ -11,8 +11,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @version June 27, 2019, 10:29 am UTC
  *
  * @property float amount
- * @property string well-wisher
- * @property string received-on
+ * @property string well_wisher
+ * @property string received_on
  */
 class Treasury extends Model
 {
@@ -29,8 +29,8 @@ class Treasury extends Model
 
     public $fillable = [
         'amount',
-        'well-wisher',
-        'received-on'
+        'well_wisher',
+        'received_on'
     ];
 
     /**
@@ -52,8 +52,8 @@ class Treasury extends Model
      */
     public static $rules = [
         'amount' => 'required',
-        'well-wisher' => 'required',
-        'received-on' => 'required'
+        'well_wisher' => 'required',
+        'received_on' => 'required'
     ];
 
     

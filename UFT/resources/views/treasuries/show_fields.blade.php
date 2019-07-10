@@ -12,14 +12,14 @@
 
 <!-- Well-Wisher Field -->
 <div class="form-group">
-    {!! Form::label('well-wisher', 'Well-Wisher:') !!}
-    <p>{!! $treasury->well-wisher !!}</p>
+    {!! Form::label('well_wisher', 'Well-Wisher:') !!}
+    <p>{!! $treasury->well_wisher !!}</p>
 </div>
 
 <!-- Received-On Field -->
 <div class="form-group">
-    {!! Form::label('received-on', 'Received-On:') !!}
-    <p>{!! $treasury->received-on !!}</p>
+    {!! Form::label('received_on', 'Received-On:') !!}
+    <p>{!! $treasury->received_on !!}</p>
 </div>
 
 <!-- Created At Field -->

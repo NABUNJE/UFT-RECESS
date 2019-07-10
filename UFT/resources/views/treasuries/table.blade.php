@@ -12,8 +12,8 @@
         @foreach($treasuries as $treasury)
             <tr>
                 <td>{!! $treasury->amount !!}</td>
-            <td>{!! $treasury->well-wisher !!}</td>
-            <td>{!! $treasury->received-on !!}</td>
+            <td>{!! $treasury->well_wisher !!}</td>
+            <td>{!! $treasury->received_on !!}</td>
                 <td>
                     {!! Form::open(['route' => ['treasuries.destroy', $treasury->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
