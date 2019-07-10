@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateDistrictRequest;
 use App\Repositories\DistrictRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Flash;
 use Response;
 
@@ -57,6 +58,10 @@ class DistrictController extends AppBaseController
         $input = $request->all();
 
         $district = $this->districtRepository->create($input);
+
+        $distext = $request->input('name');
+        Storage::put('/districts/'.$distext.'.txt','');
+
 
         Flash::success('District saved successfully.');
 

@@ -24,6 +24,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
+/*Route::get('/test',function(){
+    return view('test/index');
+});
+*/
+Route::get('/test','TestController@show');
 
 Route::resource('agents', 'AgentController');
 

@@ -35,7 +35,7 @@
 
             <!-- Logo -->
             <a href="#" class="logo">
-                <b>InfyOm</b>
+                <b>UFT</b>
             </a>
 
             <!-- Header Navbar -->
@@ -165,4 +165,5 @@
 
     <?php echo $__env->yieldContent('scripts'); ?>
 </body>
-</html><?php /**PATH /home/hix/UFT-RECESS/UFT/resources/views/layouts/app.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH /home/hix/UFT-RECESS/UFT/resources/views/layouts/app.blade.php ENDPATH**/ ?>

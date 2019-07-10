@@ -22,15 +22,6 @@
     {!! Form::date('DateOfEnroll', null, ['class' => 'form-control','id'=>'DateOfEnroll']) !!}
 </div>
 
-@section('scripts')
-    <script type="text/javascript">
-        $('#DateOfEnroll').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
-            useCurrent: false
-        })
-    </script>
-@endsection
-
 <!-- Gender Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('gender', 'Gender:') !!}

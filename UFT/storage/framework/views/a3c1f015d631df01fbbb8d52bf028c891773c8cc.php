@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>InfyOm Laravel Generator | Registration Page</title>
+    <title> Registration</title>
 
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -34,11 +34,11 @@
 <body class="hold-transition register-page">
 <div class="register-box">
     <div class="register-logo">
-        <a href="<?php echo e(url('/home')); ?>"><b>InfyOm </b>Generator</a>
+        <a href="<?php echo e(url('/home')); ?>"><b>Thank you for being part of UFT</a>
     </div>
 
     <div class="register-box-body">
-        <p class="login-box-msg">Register a new membership</p>
+        <p class="login-box-msg">Please enter you details below </p>
 
         <form method="post" action="<?php echo e(url('/register')); ?>">
 

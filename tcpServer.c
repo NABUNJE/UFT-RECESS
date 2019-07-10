@@ -13,10 +13,6 @@
 
 #define PORT 4444
 
-<<<<<<< HEAD
-
-int addmember(char arr[],char dis[]){
-=======
 int currdate(char timex[]){
     time_t t = time(NULL);
     struct tm *tm = localtime(&t);
@@ -25,7 +21,6 @@ int currdate(char timex[]){
 }
 
 int addmember(char arr[],char dis[],char dater[]){
->>>>>>> 374640dc7e0d22faaa6a363b7d40312a6e58453b
 	FILE *fp;
 	   fp =fopen(strcat(dis,".txt"),"a");
        arr = strcat(arr,dater);
@@ -143,10 +138,6 @@ int main(){
 					recv(newSocket,district,1024,0);
 					readx = recv(newSocket,buffer,1024,0);
 					buffer[readx] = '\0';
-<<<<<<< HEAD
-					
-=======
->>>>>>> 374640dc7e0d22faaa6a363b7d40312a6e58453b
 					printf("%s\n",district);
 					   //call the search module
 	    				FILE *fptr;
