@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ Route::get('/home', 'HomeController@index');
 });
 */
 Route::get('/test','TestController@show');
+Route::get('/members/text','MemberController@rectext');
 
 Route::resource('agents', 'AgentController');
 
