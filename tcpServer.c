@@ -13,6 +13,43 @@
 
 #define PORT 4444
 
+int splitter(char data[],char check[],char dis[]){
+	char delim[] = ",";
+	char *ptr = strtok(data, delim);  
+	int i = 0;
+	char *ptx[10];
+	while(ptr!=NULL){                                
+		ptx[i] = ptr;
+		i++;
+		ptr = strtok(NULL,delim);
+	}
+
+	//check if recommender exists in file
+
+	 	FILE *fptr;
+		char pitem[1024];
+		char location[1024];
+		sprintf(location,"UFT/storage/app/recommender/%s.txt",dis);
+
+	fptr = fopen(location,"r");
+		if(fptr ==NULL){
+			printf("file not found \n");
+			exit(EXIT_FAILURE);
+		}
+		while(fgets(pitem,1024,fptr)!=NULL){
+			int totalRead = strlen(pitem);
+
+			pitem[totalRead - 1] = pitem[totalRead - 1] == '\n' ? '\0' : pitem[totalRead - 1];
+			if(strstr(pitem,ptx[2])!=NULL){
+				strcpy(check,"ok");
+				break;
+
+			}
+		}
+
+	return 0;
+
+}
 int currdate(char timex[]){
     time_t t = time(NULL);
     struct tm *tm = localtime(&t);
@@ -21,9 +58,13 @@ int currdate(char timex[]){
 }
 
 int addmember(char arr[],char dis[],char dater[]){
+	char location[1024];
+	sprintf(location,"UFT/storage/app/enrollments/%s.txt",dis);
+
 	FILE *fp;
-	   fp =fopen(strcat(dis,".txt"),"a");
-       arr = strcat(arr,dater);
+	   fp =fopen(location,"a");
+	   //sprintf(arr,"%s %s %s %s",arr[0],dater,arr[1],arr[2]);
+	   sprintf(arr,"%s %s",arr,dater);
 	   fputs(arr,fp);
 	   fputs("\n",fp);
 	   fclose(fp);
@@ -115,7 +156,8 @@ int main(){
 						FILE *fp;
 						int ch = 0;
 						char filex[1024];
-						fp =fopen(strcat(district,".txt"),"a");
+						char *location = strcat("/UFT/storage/app/enrollments",district);
+						fp =fopen(strcat(location,".txt"),"a");
 						recv(newSocket, filex, sizeof(filex),0);
 						int words = atoi(filex); //string to int conversion
 						printf("%d",words);
@@ -130,7 +172,26 @@ int main(){
 
 					}
 					else{
-						addmember(buffer,district,cdate);
+						char test[1024];
+						strcpy(test,buffer);
+						char check[100] = "fail";
+
+						//splitting and checking the recommender
+						splitter(test,check,district);
+
+                        if(strcmp(check,"ok")==0){
+							addmember(buffer,district,cdate);
+							sprintf(buffer,"COMMAND SUCCESFUL");
+							send(newSocket,buffer,sizeof(buffer),0);
+
+						}
+						else{
+							sprintf(buffer,"RECOMMENDER NOT FOUND IN DATABASE");
+							send(newSocket,buffer,sizeof(buffer),0);
+
+
+						}
+						
 					}
 					
 				}

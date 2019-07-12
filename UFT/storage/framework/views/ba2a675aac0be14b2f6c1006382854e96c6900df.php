@@ -3,6 +3,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Name</th>
         <th>District</th>
         <th>Recommender</th>
         <th>Dateofenroll</th>
@@ -15,6 +16,7 @@
         <?php $__currentLoopData = $members; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $member): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
                 <td><?php echo $member->id; ?></td>
+                <td><?php echo $member->name; ?></td>
             <td><?php echo $member->district; ?></td>
             <td><?php echo $member->recommender; ?></td>
             <td><?php echo $member->DateOfEnroll; ?></td>

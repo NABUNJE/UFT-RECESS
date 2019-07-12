@@ -60,7 +60,9 @@ class DistrictController extends AppBaseController
         $district = $this->districtRepository->create($input);
 
         $distext = $request->input('name');
-        Storage::put('/districts/'.$distext.'.txt','');
+        Storage::put('/enrollments/'.$distext.'.txt','');
+        Storage::put('/recommender/'.$distext.'.txt','');
+        Storage::put('/payments/'.$distext.'.txt','');
 
 
         Flash::success('District saved successfully.');

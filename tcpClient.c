@@ -115,6 +115,8 @@ int main(){
 			fp =fopen(file, "r");
 			if(fp == NULL){
 				send(clientSocket,buffer,1024,0);
+				recv(clientSocket,buffer,1024,0);
+				printf("%s\n",buffer);
 			}
 			else{  
 				bzero(buffer,sizeof(buffer));

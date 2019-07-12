@@ -158,12 +158,11 @@ class MemberController extends AppBaseController
     //function for creating recommber text file
     public function rectext(){
        $district = 'KAMPALA';
-       $rec = DB::table('members')->pluck('name')->where('district',$district);
+
+       $rec = DB::table('members')->where('district',$district)->pluck('name');
+       Storage::delete('recommender/'.$district.'.txt');
        foreach($rec as $recommender){
-           Storage::put('/'.$district.'/recommender.txt',$recommender);
-           echo $recommender;
-           dd($recommender);
-           echo 'fish';
+           Storage::append('recommender/'.$district.'.txt',$recommender);
        }
 
        return view('members.text');
