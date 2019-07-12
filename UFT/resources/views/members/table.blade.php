@@ -3,6 +3,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Name</th>
         <th>District</th>
         <th>Recommender</th>
         <th>Dateofenroll</th>
@@ -15,6 +16,7 @@
         @foreach($members as $member)
             <tr>
                 <td>{!! $member->id !!}</td>
+                <td>{!! $member->name !!}</td>
             <td>{!! $member->district !!}</td>
             <td>{!! $member->recommender !!}</td>
             <td>{!! $member->DateOfEnroll !!}</td>
