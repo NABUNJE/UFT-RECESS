@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateMemberRequest;
 use App\Repositories\MemberRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Flash;
 use Response;
 
@@ -152,5 +154,18 @@ class MemberController extends AppBaseController
         Flash::success('Member deleted successfully.');
 
         return redirect(route('members.index'));
+    }
+    //function for creating recommber text file
+    public function rectext(){
+       $district = 'KAMPALA';
+       $rec = DB::table('members')->pluck('name')->where('district',$district);
+       foreach($rec as $recommender){
+           Storage::put('/'.$district.'/recommender.txt',$recommender);
+           echo $recommender;
+           dd($recommender);
+           echo 'fish';
+       }
+
+       return view('members.text');
     }
 }

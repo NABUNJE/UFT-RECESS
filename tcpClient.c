@@ -29,14 +29,14 @@ void sign(){
 
 	int sign[10][10];
     for(int i=0;i<5;i++){
-        for(int j=0;j<5;j++){
+        for(int j=0;j<3;j++){
             printf("cell(%d,%d)-",i,j);
             scanf("%d",&sign[i][j]);
         }
     }
 
     for(int i=0;i<5;i++){
-        for(int j=0;j<5;j++){
+        for(int j=0;j<3;j++){
             if(sign[i][j] == 0){
                 printf(" ");
             }
