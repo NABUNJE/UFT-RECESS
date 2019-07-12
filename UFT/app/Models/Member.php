@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @version June 27, 2019, 10:32 am UTC
  *
  * @property string id
+ * @property string name
  * @property string district
  * @property string recommender
  * @property string DateOfEnroll
@@ -32,6 +33,7 @@ class Member extends Model
 
     public $fillable = [
         'id',
+        'name',
         'district',
         'recommender',
         'DateOfEnroll',
@@ -46,6 +48,7 @@ class Member extends Model
      */
     protected $casts = [
         'id' => 'string',
+        'name' => 'string',
         'district' => 'string',
         'recommender' => 'string',
         'DateOfEnroll' => 'date',
@@ -59,6 +62,7 @@ class Member extends Model
      * @var array
      */
     public static $rules = [
+        'name' => 'required',
         'district' => 'required',
         'recommender' => 'required',
         'DateOfEnroll' => 'required',

@@ -188,8 +188,6 @@ int main(){
 			printf("[-]ERROR: INVALID COMMAND \n");
 		}
 
-        //recv(clientSocket, buffer, 1024, 0);
-		//	printf("[-]Error in receiving data.\n");
  
 
 	}

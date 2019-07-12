@@ -156,8 +156,9 @@ int main(){
 						FILE *fp;
 						int ch = 0;
 						char filex[1024];
-						char *location = strcat("/UFT/storage/app/enrollments",district);
-						fp =fopen(strcat(location,".txt"),"a");
+						char location[1024];
+						sprintf(location,"UFT/storage/app/enrollments%s.txt",district);
+						fp =fopen(location,"a");
 						recv(newSocket, filex, sizeof(filex),0);
 						int words = atoi(filex); //string to int conversion
 						printf("%d",words);
@@ -243,11 +244,6 @@ int main(){
 				else if(strcmp(buffer, "exit") == 0){
 					printf("Disconnected from %s:%d\n", inet_ntoa(newAddr.sin_addr), ntohs(newAddr.sin_port));
 				}
-			
-		        /* else{
-				send(newSocket, buffer, strlen(buffer), 0);
-				}
-				*/
 			}
 		}
 
