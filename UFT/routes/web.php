@@ -20,6 +20,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//Route::get('/bar','chartController@index');
 
 Auth::routes();
 
@@ -46,4 +47,4 @@ Route::resource('dashboard', 'DashboardController');
 
 Route::resource('administrators', 'AdministratorController');
 
-Route::get('line-chart','chartController@index');
+Route::get('/bar','chartController@index');
