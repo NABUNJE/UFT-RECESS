@@ -8,6 +8,7 @@ use App\Repositories\DistrictRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Flash;
 use Response;
 
@@ -159,5 +160,38 @@ class DistrictController extends AppBaseController
         Flash::success('District deleted successfully.');
 
         return redirect(route('districts.index'));
+    }
+//updtaing total enrollments in districts
+//THIS IS SUPPOSED TO BE A CRON  JOB
+    public function enrolno(){
+        $districts = DB::table('districts')->pluck('name');
+        foreach($districts as $district){
+                $count = DB::table('members')
+                    ->where('district',$district)
+                    ->count();
+                DB::table('districts')
+                    ->where('name',$district)
+                    ->update(['enrollments'=>$count]);
+
+        }
+        return redirect(route('districts.index'));
+
+    }
+
+//updtaing total enrollments in districts
+//THIS IS SUPPOSED TO BE A CRON  JOB
+    public function agentno(){
+        $districts = DB::table('districts')->pluck('name');
+        foreach($districts as $district){
+                $count = DB::table('agents')
+                    ->where('district',$district)
+                    ->count();
+                DB::table('districts')
+                    ->where('name',$district)
+                    ->update(['agents'=>$count]);
+
+        }
+        return redirect(route('districts.index'));
+
     }
 }

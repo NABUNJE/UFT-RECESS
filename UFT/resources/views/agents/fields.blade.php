@@ -4,18 +4,6 @@
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- District Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('district', 'District:') !!}
-    {!! Form::text('district', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Admin Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('admin', 'Admin:') !!}
-    {!! Form::text('admin', null, ['class' => 'form-control']) !!}
-</div>
-
 <!-- Signature Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('signature', 'Signature:') !!}

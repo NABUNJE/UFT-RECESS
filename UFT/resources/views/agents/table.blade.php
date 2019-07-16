@@ -4,7 +4,6 @@
             <tr>
                 <th>Name</th>
         <th>District</th>
-        <th>Admin</th>
         <th>Signature</th>
                 <th colspan="3">Action</th>
             </tr>
@@ -14,7 +13,6 @@
             <tr>
                 <td>{!! $agent->name !!}</td>
             <td>{!! $agent->district !!}</td>
-            <td>{!! $agent->admin !!}</td>
             <td>{!! $agent->signature !!}</td>
                 <td>
                     {!! Form::open(['route' => ['agents.destroy', $agent->id], 'method' => 'delete']) !!}

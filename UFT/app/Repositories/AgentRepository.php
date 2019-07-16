@@ -19,7 +19,6 @@ class AgentRepository extends BaseRepository
     protected $fieldSearchable = [
         'name',
         'district',
-        'admin',
         'signature'
     ];
 

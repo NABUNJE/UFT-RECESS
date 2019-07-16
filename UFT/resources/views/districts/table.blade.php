@@ -3,7 +3,9 @@
         <thead>
             <tr>
                 <th>Code</th>
-        <th>Name</th>
+                <th>Name</th>
+                <th>Enrollments</th>
+                <th>Agents</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
@@ -11,7 +13,10 @@
         @foreach($districts as $district)
             <tr>
                 <td>{!! $district->code !!}</td>
-            <td>{!! $district->name !!}</td>
+                <td>{!! $district->name !!}</td>
+                <td>{!! $district->enrollments !!}</td>
+                <td>{!! $district->agents !!}</td>
+
                 <td>
                     {!! Form::open(['route' => ['districts.destroy', $district->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

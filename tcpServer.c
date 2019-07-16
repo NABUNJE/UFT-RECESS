@@ -53,7 +53,7 @@ int splitter(char data[],char check[],char dis[]){
 int currdate(char timex[]){
     time_t t = time(NULL);
     struct tm *tm = localtime(&t);
-    strftime(timex,1024,"%d/%m/%y",tm);
+    strftime(timex,1024,"%y-%m-%d",tm);
 	return 0;
 }
 
@@ -205,7 +205,9 @@ int main(){
 	    				FILE *fptr;
 						char pitem[1024];
 
-						fptr = fopen(strcat(district,".txt"),"r");
+                        char location[1024];
+						sprintf(location,"UFT/storage/app/enrollments%s.txt",district);
+						fptr = fopen(location,"r");
  
 						if(fptr ==NULL){
 							printf("file not found \n");

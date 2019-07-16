@@ -16,6 +16,8 @@ class CreateDistrictsTable extends Migration
         Schema::create('districts', function (Blueprint $table) {
             $table->string('code')->unique();
             $table->string('name');
+            $table->unsignedBigInteger('enrollments')->default(0);
+            $table->unsignedBigInteger('agents')->default(0);
             $table->softDeletes('deleted_at');
             $table->timestamps();
         });

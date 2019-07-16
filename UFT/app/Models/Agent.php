@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property string name
  * @property string district
- * @property string admin
+
  * @property string signature
  */
 class Agent extends Model
@@ -30,9 +30,8 @@ class Agent extends Model
 
     public $fillable = [
         'name',
-        'district',
-        'admin',
-        'signature'
+        'signature',
+        'district'
     ];
 
     /**
@@ -44,7 +43,6 @@ class Agent extends Model
         'id' => 'integer',
         'name' => 'string',
         'district' => 'string',
-        'admin' => 'string',
         'signature' => 'string'
     ];
 
@@ -55,8 +53,6 @@ class Agent extends Model
      */
     public static $rules = [
         'name' => 'required',
-        'district' => 'required',
-        'admin' => 'required',
         'signature' => 'required'
     ];
 

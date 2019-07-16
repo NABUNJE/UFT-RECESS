@@ -3,7 +3,9 @@
         <thead>
             <tr>
                 <th>Code</th>
-        <th>Name</th>
+                <th>Name</th>
+                <th>Enrollments</th>
+                <th>Agents</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
@@ -11,7 +13,10 @@
         <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
                 <td><?php echo $district->code; ?></td>
-            <td><?php echo $district->name; ?></td>
+                <td><?php echo $district->name; ?></td>
+                <td><?php echo $district->enrollments; ?></td>
+                <td><?php echo $district->agents; ?></td>
+
                 <td>
                     <?php echo Form::open(['route' => ['districts.destroy', $district->id], 'method' => 'delete']); ?>
 

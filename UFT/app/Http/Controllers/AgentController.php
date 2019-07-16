@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateAgentRequest;
 use App\Repositories\AgentRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Flash;
 use Response;
 
@@ -55,6 +56,15 @@ class AgentController extends AppBaseController
     public function store(CreateAgentRequest $request)
     {
         $input = $request->all();
+        $min = DB::table('districts')->min('agents');
+        $minDistrict = DB::table('districts')
+            ->where('agents',$min)
+            ->pluck('name')
+            ->first();
+
+        $minDistrict = ['district'=>$minDistrict];
+
+        $input = array_merge($input,$minDistrict);
 
         $agent = $this->agentRepository->create($input);
 

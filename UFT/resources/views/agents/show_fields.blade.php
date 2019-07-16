@@ -10,18 +10,6 @@
     <p>{!! $agent->name !!}</p>
 </div>
 
-<!-- District Field -->
-<div class="form-group">
-    {!! Form::label('district', 'District:') !!}
-    <p>{!! $agent->district !!}</p>
-</div>
-
-<!-- Admin Field -->
-<div class="form-group">
-    {!! Form::label('admin', 'Admin:') !!}
-    <p>{!! $agent->admin !!}</p>
-</div>
-
 <!-- Signature Field -->
 <div class="form-group">
     {!! Form::label('signature', 'Signature:') !!}
