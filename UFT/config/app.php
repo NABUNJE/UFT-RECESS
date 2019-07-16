@@ -179,7 +179,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
     ],
 
     /*
@@ -187,7 +187,10 @@ return [
     | Class Aliases
     |--------------------------------------------------------------------------
     |
-    | This array of class aliases will be registered when this application
+    | This array of class aliases will be registered when this applicationacade for the given alias.
+     *
+     * @param  string  $alias
+     * @return void
     | is started. However, feel free to register as many as you wish as
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
@@ -233,6 +236,7 @@ return [
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
+        'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
 
     ],
 
