@@ -9,6 +9,7 @@
 
                 <div class="panel-body">
                     {!! $chart->html() !!}
+                    {!! $chart1->html() !!}
                 </div>
             </div>
         </div>
@@ -16,4 +17,5 @@
 </div>
 {!! Charts::scripts() !!}
 {!! $chart->script() !!}
+{!! $chart1->script() !!}
 @endsection
