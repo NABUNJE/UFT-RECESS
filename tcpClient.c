@@ -7,6 +7,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <ctype.h>
+#include <malloc.h>
 
 #define PORT 4444
 
@@ -26,27 +27,81 @@ void ltrim(char str[])
 }
 
 void sign(){
-
-	int sign[10][10];
+	char *str;
+	int total=0;
+	char *key[2][26] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "010101101111101", "110101110101110", "001010100010001", "110101101101110", "111100111100111", "111101111100100", "001010100011010", "101101111101101", "111010010010111", "111010010010110", "101110100110101", "100100100100111", "101111101101101", "010101101101101","010101101101010" ,"110101110100100","010101101111011","110101110101101","111100111001111","111010010010010","101101101101111","101101101101010","101101101111101","101101010101101","101101111001111","111001010100111"};
+	char *sign[5][3];
+	int num;
     for(int i=0;i<5;i++){
-        for(int j=0;j<3;j++){
+        for(int j=0;j<3;){
             printf("cell(%d,%d)-",i,j);
-            scanf("%d",&sign[i][j]);
+			sign[i][j] = (char *)malloc(2);
+            scanf("%d",&num);
+			sprintf(sign[i][j],"%d",num);
+			if(num==0 || num ==1){
+				j++;
+				total += sizeof(sign[i][j]);
+                continue;
+			}
+			printf("WRONG INPUT\n");
+			
         }
     }
 
     for(int i=0;i<5;i++){
         for(int j=0;j<3;j++){
-            if(sign[i][j] == 0){
-                printf(" ");
+            if(strcmp(sign[i][j],"0")==0){
+                printf("  ");
             }
             else{
-                printf("*");
-            }
-            
+                printf("* ");
         }
-        printf("\n");
+       
     }
+			printf("\n");
+	}
+	str = (char *)malloc(total + 1);
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (j == 0 && i == 0)
+            {
+                strcpy(str, sign[i][j]);
+            }
+            else
+            {
+                strcat(str, sign[i][j]);
+            }
+        }
+    }
+    printf("%s\n",str);
+	for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            free(sign[i][j]);
+        }
+    }
+ int found = 0;
+    char password[2];
+    for (int n = 0; n < 26; n++)
+    {
+        if (strcmp(key[1][n], str) == 0)
+        {
+            strcpy(password, key[0][n]);
+            found = 1;
+            break;
+        }
+    }
+    if (found = 0)
+    {
+        printf("Wrong password was entered\n");
+    }
+    printf("your password is: %s \n", password);
+    free(str);
+   // return 0;
+
 }
 
 int main(){
