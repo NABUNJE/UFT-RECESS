@@ -11,6 +11,23 @@
 
 #define PORT 4444
 
+//search receiver function
+void receiver(int clientSocket,char buffer[],char district[]){
+	send(clientSocket,district,1024,0);
+	send(clientSocket, buffer,1024, 0);
+	bzero(buffer,1024);
+	char filex[1024];
+	int ch = 0;
+	//receive search data from the server
+	recv(clientSocket, filex, 1024,0);				
+	int words = atoi(filex); //string to int conversion
+	
+	while(ch != words){
+		recv(clientSocket, buffer, 1024, 0);
+		printf("%s\n",buffer);
+		ch++;
+	}
+}
 
 //triming of the strings 
 void ltrim(char str[])
@@ -35,6 +52,7 @@ void sign(){
     for(int i=0;i<5;i++){
         for(int j=0;j<3;){
             printf("cell(%d,%d)-",i,j);
+<<<<<<< HEAD
 			sign[i][j] = (char *)malloc(2);
             scanf("%d",&num);
 			sprintf(sign[i][j],"%d",num);
@@ -42,6 +60,12 @@ void sign(){
 				j++;
 				total += sizeof(sign[i][j]);
                 continue;
+=======
+            scanf("%d",&sign[i][j]);
+			if(sign[i][j] == 0 || sign[i][j] == 1){
+				j++;
+				continue;
+>>>>>>> 6c1d28cca06fb12785dfafc686537106ecc33fda
 			}
 			printf("WRONG INPUT\n");
 			
@@ -166,7 +190,6 @@ int main(){
 			ltrim(file);//trimming
 			FILE *fp;
 			int words = 0;
-			char c;
 			fp =fopen(file, "r");
 			if(fp == NULL){
 				send(clientSocket,buffer,1024,0);
@@ -177,22 +200,20 @@ int main(){
 				bzero(buffer,sizeof(buffer));
 				file = "file";
 				send(clientSocket,file,sizeof(file),0);
-				while((c = getc(fp)) != EOF){
-					fscanf(fp,"%s",buffer);
-					if(isspace(c) || c =='\t'){
+				while(fgets(buffer,1024,fp)!=NULL){
 					words++;
-					}
 				}
+				printf("%d\n",words);
+				
 				char size[1024];
 				sprintf(size,"%d",words);//int to string convertion
 				send(clientSocket, size, sizeof(size),0);
 				rewind(fp);
 
 				char ch;
-				while(ch != EOF){
-					fscanf(fp,"%s",buffer);
+				while(fgets(buffer,1024,fp)!= NULL){
 					send(clientSocket,buffer,1024,0);
-		 			ch = fgetc(fp);
+		 			
 				}
 				fclose(fp);
                printf("sent successfully\n");
@@ -204,40 +225,22 @@ int main(){
 			send(clientSocket, buffer, strlen(buffer), 0);
 			scanf("%s",buffer);
 			ltrim(buffer);
-			send(clientSocket,district,sizeof(district),0);
-			send(clientSocket, buffer, strlen(buffer), 0);
-            bzero(buffer,sizeof(buffer));
 
-			printf("%s\n",district);
-			printf("hix\n");
-			//receive search data from the server
-			recv(clientSocket,buffer,strlen(buffer),0);
-
-			while(1){
-				printf("loop\n");
-				recv(clientSocket,buffer,strlen(buffer),0);
-				if(strcmp(buffer,"complete")){
-					printf("break hit\n");
-					break;
-					
-				}  
-				printf("%s\n",buffer);
-			}
-			
-			
+			//receiver module
+            receiver(clientSocket,buffer,district);
 		}
 		else if(strcmp(buffer, "check_status") == 0){
 			send(clientSocket, buffer, sizeof(buffer), 0);
-            send(clientSocket,district,sizeof(district),0);
-			send(clientSocket,user,sizeof(user),0);
+			send(clientSocket, district, sizeof(district), 0);
+			send(clientSocket, user, sizeof(user), 0);
 
-
-			//check module
 
 		}
 		else if(strcmp(buffer, "get_statement") == 0){
-			send(clientSocket, buffer, strlen(buffer), 0);
-			//statement check
+			send(clientSocket, buffer, sizeof(buffer), 0);
+
+			//check module
+            receiver(clientSocket,user,district);
 		}
 		else{
 			printf("[-]ERROR: INVALID COMMAND \n");
