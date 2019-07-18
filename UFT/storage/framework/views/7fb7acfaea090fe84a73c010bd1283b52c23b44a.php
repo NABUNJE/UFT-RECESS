@@ -6,22 +6,6 @@
 
 </div>
 
-<!-- District Field -->
-<div class="form-group col-sm-6">
-    <?php echo Form::label('district', 'District:'); ?>
-
-    <?php echo Form::text('district', null, ['class' => 'form-control']); ?>
-
-</div>
-
-<!-- Admin Field -->
-<div class="form-group col-sm-6">
-    <?php echo Form::label('admin', 'Admin:'); ?>
-
-    <?php echo Form::text('admin', null, ['class' => 'form-control']); ?>
-
-</div>
-
 <!-- Signature Field -->
 <div class="form-group col-sm-6">
     <?php echo Form::label('signature', 'Signature:'); ?>

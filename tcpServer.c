@@ -13,17 +13,104 @@
 
 #define PORT 4444
 
+void checker(int newSocket,char location[],char buffer[],char district[]){
+		FILE *fptr;
+		char pitem[1024];
+		int words = 0;
+		fptr = fopen(location,"r");
+
+		if(fptr ==NULL){
+			printf("file not found \n");
+			exit(EXIT_FAILURE);
+		}
+		//get the number of occurances of the item
+		while(fgets(pitem,1024,fptr)!=NULL){
+			int totalRead = strlen(pitem);
+
+			pitem[totalRead - 1] = pitem[totalRead - 1] == '\n' ? '\0' : pitem[totalRead - 1];
+
+			if(strstr(pitem,buffer)!=NULL){
+				words++;
+			}
+
+		}
+		char size[1024];
+		sprintf(size,"%d",words);//int to string convertion
+		send(newSocket, size, sizeof(size),0);
+		rewind(fptr);
+
+		while(fgets(pitem,1024,fptr)!=NULL){
+			int totalRead = strlen(pitem);
+
+			pitem[totalRead - 1] = pitem[totalRead - 1] == '\n' ? '\0' : pitem[totalRead - 1];
+
+			if(strstr(pitem,buffer)!=NULL){
+
+				send(newSocket,pitem,sizeof(pitem),0);
+	
+			}
+
+		}
+					
+}
+int splitter(char data[],char check[],char dis[]){
+	char delim[] = ",";
+	char *ptr = strtok(data, delim);  
+	int i = 0;
+	char *ptx[10];
+	while(ptr!=NULL){                                
+		ptx[i] = ptr;
+		i++;
+		ptr = strtok(NULL,delim);
+	}
+	if(i > 2){
+		//check if recommender exists in file
+
+		FILE *fptr;
+		char pitem[1024];
+		char location[1024];
+		sprintf(location,"UFT/storage/app/recommender/%s.txt",dis);
+
+		fptr = fopen(location,"r");
+			if(fptr ==NULL){
+				printf("file not found \n");
+				exit(EXIT_FAILURE);
+			}
+			while(fgets(pitem,1024,fptr)!=NULL){
+				int totalRead = strlen(pitem);
+
+				pitem[totalRead - 1] = pitem[totalRead - 1] == '\n' ? '\0' : pitem[totalRead - 1];
+				if(strstr(pitem,ptx[2])!=NULL){
+					strcpy(check,"ok");
+					break;
+
+				}
+			}
+	}
+    //if no recommender arguement supplied
+	else{
+	strcpy(check,"ok");
+	}
+
+
+	return 0;
+
+}
 int currdate(char timex[]){
     time_t t = time(NULL);
     struct tm *tm = localtime(&t);
-    strftime(timex,1024,"%d/%m/%y",tm);
+    strftime(timex,1024,"%Y-%m-%d",tm);
 	return 0;
 }
 
 int addmember(char arr[],char dis[],char dater[]){
+	char location[1024];
+	sprintf(location,"UFT/storage/app/enrollments/%s.txt",dis);
+
 	FILE *fp;
-	   fp =fopen(strcat(dis,".txt"),"a");
-       arr = strcat(arr,dater);
+	   fp =fopen(location,"a");
+	   //sprintf(arr,"%s %s %s %s",arr[0],dater,arr[1],arr[2]);
+	   sprintf(arr,"%s %s",arr,dater);
 	   fputs(arr,fp);
 	   fputs("\n",fp);
 	   fclose(fp);
@@ -103,25 +190,46 @@ int main(){
 
 				currdate(cdate);
 
-				int readx = recv(newSocket,buffer,1024,0);
-		        buffer[readx] = '\0';
+				recv(newSocket,buffer,1024,0);
 
 				if(strcmp(buffer, "Addmember") == 0){
 					recv(newSocket,district,1024,0);
-					readx = recv(newSocket,buffer,1024,0);
-					buffer[readx] = '\0';
+					recv(newSocket,buffer,1024,0);
+
+					//variables to be used
+					char test[1024];
+					strcpy(test,buffer);
+					char check[100] = "fail";
+
 					if(strcmp(buffer,"file") ==0){
 						bzero(buffer,sizeof(buffer));
 						FILE *fp;
 						int ch = 0;
 						char filex[1024];
-						fp =fopen(strcat(district,".txt"),"a");
-						recv(newSocket, filex, sizeof(filex),0);
+						char location[1024];
+						sprintf(location,"UFT/storage/app/enrollments/%s.txt",district);
+
+						fp =fopen(location,"a");
+						recv(newSocket, filex, sizeof(filex),0);				
 						int words = atoi(filex); //string to int conversion
-						printf("%d",words);
+						printf("%d\n",words);
 						while(ch != words){
 							recv(newSocket,buffer,1024,0);
-							fprintf(fp, "%s " ,buffer);
+							printf("%s",buffer);
+							splitter(test,check,district);
+
+							if(strcmp(check,"ok")==0){
+								addmember(buffer,district,cdate);
+								sprintf(buffer,"COMMAND SUCCESFUL");
+								send(newSocket,buffer,sizeof(buffer),0);
+
+							}
+							else{
+								sprintf(buffer,"RECOMMENDER NOT FOUND IN DATABASE");
+								send(newSocket,buffer,sizeof(buffer),0);
+
+							}
+							
 							ch++;
 						}
 						fputs("\n",fp);
@@ -130,42 +238,33 @@ int main(){
 
 					}
 					else{
-						addmember(buffer,district,cdate);
+						//splitting and checking the recommender
+						splitter(test,check,district);
+
+                        if(strcmp(check,"ok")==0){
+							addmember(buffer,district,cdate);
+							sprintf(buffer,"COMMAND SUCCESFUL");
+							send(newSocket,buffer,sizeof(buffer),0);
+
+						}
+						else{
+							sprintf(buffer,"RECOMMENDER NOT FOUND IN DATABASE");
+							send(newSocket,buffer,sizeof(buffer),0);
+
+						}
+						
 					}
 					
 				}
 				else if(strcmp(buffer, "search") == 0){
 					recv(newSocket,district,1024,0);
-					readx = recv(newSocket,buffer,1024,0);
-					buffer[readx] = '\0';
-					printf("%s\n",district);
+					recv(newSocket,buffer,1024,0);
+
+					char location[1024];
+					sprintf(location,"UFT/storage/app/enrollments/%s.txt",district);
+
 					   //call the search module
-	    				FILE *fptr;
-						char pitem[1024];
-
-						fptr = fopen(strcat(district,".txt"),"r");
- 
-						if(fptr ==NULL){
-							printf("file not found \n");
-							exit(EXIT_FAILURE);
-						}
-
-						while(fgets(pitem,1024,fptr)!=NULL){
-							int totalRead = strlen(pitem);
-
-							pitem[totalRead - 1] = pitem[totalRead - 1] == '\n' ? '\0' : pitem[totalRead - 1];
-
-							if(strstr(pitem,buffer)!=NULL){
-								printf("%s\n",pitem);
-
-								send(newSocket,pitem,sizeof(pitem),0);
-					
-							}
-
-						}
-						char *fin ="complete";
-						send(newSocket,fin,sizeof(fin),0);
-
+					checker(newSocket,location,buffer,district);
 
 				}
 				else if(strcmp(buffer, "check_status") == 0){
@@ -174,19 +273,22 @@ int main(){
 					recv(newSocket, user, sizeof(user),0);
 					
 
+					
+
 				}
 				else if(strcmp(buffer, "get_statement") == 0){
-					printf("statement\n");
+					recv(newSocket,district, sizeof(district),0);
+					recv(newSocket, user, sizeof(user),0);
+
+					char location[1024];
+					sprintf(location,"UFT/storage/app/payments/%s.txt",district);
+					//call the search module
+				    checker(newSocket,location,user,district);
 				}
 
 				else if(strcmp(buffer, "exit") == 0){
 					printf("Disconnected from %s:%d\n", inet_ntoa(newAddr.sin_addr), ntohs(newAddr.sin_port));
 				}
-			
-		        /* else{
-				send(newSocket, buffer, strlen(buffer), 0);
-				}
-				*/
 			}
 		}
 

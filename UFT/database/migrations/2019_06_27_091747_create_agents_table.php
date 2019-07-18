@@ -17,7 +17,6 @@ class CreateAgentsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('district');
-            $table->string('admin');
             $table->string('signature');
             $table->softDeletes('deleted_at');
             $table->timestamps();

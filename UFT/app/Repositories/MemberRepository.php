@@ -18,6 +18,7 @@ class MemberRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'id',
+        'name',
         'district',
         'recommender',
         'DateOfEnroll',

@@ -18,7 +18,8 @@ class DistrictRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'code',
-        'name'
+        'name',
+        'enrollments'
     ];
 
     /**

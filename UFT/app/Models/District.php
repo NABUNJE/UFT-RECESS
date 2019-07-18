@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property string code
  * @property string name
+ * @property integer enrollments
  */
 class District extends Model
 {
@@ -28,7 +29,8 @@ class District extends Model
 
     public $fillable = [
         'code',
-        'name'
+        'name',
+        'enrollments'
     ];
 
     /**
@@ -38,7 +40,8 @@ class District extends Model
      */
     protected $casts = [
         'code' => 'string',
-        'name' => 'string'
+        'name' => 'string',
+        'enrollments'=> 'integer'
     ];
 
     /**

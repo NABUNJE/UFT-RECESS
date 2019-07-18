@@ -8,6 +8,7 @@ use App\Repositories\DistrictRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Flash;
 use Response;
 
@@ -60,7 +61,9 @@ class DistrictController extends AppBaseController
         $district = $this->districtRepository->create($input);
 
         $distext = $request->input('name');
-        Storage::put('/districts/'.$distext.'.txt','');
+        Storage::put('/enrollments/'.$distext.'.txt','');
+        Storage::put('/recommender/'.$distext.'.txt','');
+        Storage::put('/payments/'.$distext.'.txt','');
 
 
         Flash::success('District saved successfully.');
@@ -158,4 +161,5 @@ class DistrictController extends AppBaseController
 
         return redirect(route('districts.index'));
     }
+
 }
