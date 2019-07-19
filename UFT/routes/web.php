@@ -30,7 +30,7 @@ Route::get('/home', 'HomeController@index');
     return view('test/index');
 });
 */
-Route::get('/test','DistrictController@agentno');
+Route::get('/test','TestController@show');
 Route::get('/members/text','MemberController@rectext');
 
 Route::resource('agents', 'AgentController');

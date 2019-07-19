@@ -99,7 +99,7 @@ int splitter(char data[],char check[],char dis[]){
 int currdate(char timex[]){
     time_t t = time(NULL);
     struct tm *tm = localtime(&t);
-    strftime(timex,1024,"%y-%m-%d",tm);
+    strftime(timex,1024,"%Y-%m-%d",tm);
 	return 0;
 }
 
@@ -190,13 +190,11 @@ int main(){
 
 				currdate(cdate);
 
-				int readx = recv(newSocket,buffer,1024,0);
-		        buffer[readx] = '\0';
+				recv(newSocket,buffer,1024,0);
 
 				if(strcmp(buffer, "Addmember") == 0){
 					recv(newSocket,district,1024,0);
-					readx = recv(newSocket,buffer,1024,0);
-					buffer[readx] = '\0';
+					recv(newSocket,buffer,1024,0);
 
 					//variables to be used
 					char test[1024];
@@ -260,8 +258,7 @@ int main(){
 				}
 				else if(strcmp(buffer, "search") == 0){
 					recv(newSocket,district,1024,0);
-					readx = recv(newSocket,buffer,1024,0);
-					buffer[readx] = '\0';
+					recv(newSocket,buffer,1024,0);
 
 					char location[1024];
 					sprintf(location,"UFT/storage/app/enrollments/%s.txt",district);

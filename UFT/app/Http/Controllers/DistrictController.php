@@ -161,37 +161,5 @@ class DistrictController extends AppBaseController
 
         return redirect(route('districts.index'));
     }
-//updtaing total enrollments in districts
-//THIS IS SUPPOSED TO BE A CRON  JOB
-    public function enrolno(){
-        $districts = DB::table('districts')->pluck('name');
-        foreach($districts as $district){
-                $count = DB::table('members')
-                    ->where('district',$district)
-                    ->count();
-                DB::table('districts')
-                    ->where('name',$district)
-                    ->update(['enrollments'=>$count]);
 
-        }
-        return redirect(route('districts.index'));
-
-    }
-
-//updtaing total enrollments in districts
-//THIS IS SUPPOSED TO BE A CRON  JOB
-    public function agentno(){
-        $districts = DB::table('districts')->pluck('name');
-        foreach($districts as $district){
-                $count = DB::table('agents')
-                    ->where('district',$district)
-                    ->count();
-                DB::table('districts')
-                    ->where('name',$district)
-                    ->update(['agents'=>$count]);
-
-        }
-        return redirect(route('districts.index'));
-
-    }
 }

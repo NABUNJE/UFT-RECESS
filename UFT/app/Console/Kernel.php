@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\MemberUpload::class,
+        Commands\EnrolNum::class,
+        Commands\AgentNum::class,
     ];
 
     /**
@@ -26,6 +28,13 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command('member:upload')
+                 ->everyMinute();
+        $schedule->command('enroll:number')
+                 ->everyMinute();
+        $schedule->command('agent:number')
+                 ->everyMinute();
+
     }
 
     /**

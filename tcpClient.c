@@ -52,7 +52,6 @@ void sign(){
     for(int i=0;i<5;i++){
         for(int j=0;j<3;){
             printf("cell(%d,%d)-",i,j);
-<<<<<<< HEAD
 			sign[i][j] = (char *)malloc(2);
             scanf("%d",&num);
 			sprintf(sign[i][j],"%d",num);
@@ -60,12 +59,6 @@ void sign(){
 				j++;
 				total += sizeof(sign[i][j]);
                 continue;
-=======
-            scanf("%d",&sign[i][j]);
-			if(sign[i][j] == 0 || sign[i][j] == 1){
-				j++;
-				continue;
->>>>>>> 6c1d28cca06fb12785dfafc686537106ecc33fda
 			}
 			printf("WRONG INPUT\n");
 			
