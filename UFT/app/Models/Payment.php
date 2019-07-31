@@ -6,12 +6,51 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Payment
- * @package App\Models
- * @version June 27, 2019, 10:32 am UTC
- *
- * @property string Role
- * @property float amount
+ * @SWG\Definition(
+ *      definition="Payment",
+ *      required={""},
+ *      @SWG\Property(
+ *          property="Role",
+ *          description="Role",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="Salary",
+ *          description="Salary",
+ *          type="float",
+ *          format="float"
+ *      ),
+ *      @SWG\Property(
+ *          property="Number",
+ *          description="Number",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="Total",
+ *          description="Total",
+ *          type="float",
+ *          format="float"
+ *      ),
+ *      @SWG\Property(
+ *          property="deleted_at",
+ *          description="deleted_at",
+ *          type="string",
+ *          format="date-time"
+ *      ),
+ *      @SWG\Property(
+ *          property="created_at",
+ *          description="created_at",
+ *          type="string",
+ *          format="date-time"
+ *      ),
+ *      @SWG\Property(
+ *          property="updated_at",
+ *          description="updated_at",
+ *          type="string",
+ *          format="date-time"
+ *      )
+ * )
  */
 class Payment extends Model
 {
@@ -47,14 +86,8 @@ class Payment extends Model
      * @var array
      */
     public static $rules = [
-        'Role' => 'required',
-        'amount' => 'required'
+        'Role' => 'required'
     ];
 
-    public function agent(){
-        return $this->belongsTo('App/Models/Agent');
-    }
-    public function administrator(){
-        return $this->belongsTo('App/Models/Administrator');
-    }
+
 }

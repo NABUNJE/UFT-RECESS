@@ -6,13 +6,50 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class District
- * @package App\Models
- * @version June 27, 2019, 10:31 am UTC
- *
- * @property string code
- * @property string name
- * @property integer enrollments
+ * @SWG\Definition(
+ *      definition="District",
+ *      required={""},
+ *      @SWG\Property(
+ *          property="code",
+ *          description="code",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="name",
+ *          description="name",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="enrollments",
+ *          description="enrollments",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="agents",
+ *          description="agents",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="deleted_at",
+ *          description="deleted_at",
+ *          type="string",
+ *          format="date-time"
+ *      ),
+ *      @SWG\Property(
+ *          property="created_at",
+ *          description="created_at",
+ *          type="string",
+ *          format="date-time"
+ *      ),
+ *      @SWG\Property(
+ *          property="updated_at",
+ *          description="updated_at",
+ *          type="string",
+ *          format="date-time"
+ *      )
+ * )
  */
 class District extends Model
 {
@@ -30,7 +67,8 @@ class District extends Model
     public $fillable = [
         'code',
         'name',
-        'enrollments'
+        'enrollments',
+        'agents'
     ];
 
     /**
@@ -41,7 +79,8 @@ class District extends Model
     protected $casts = [
         'code' => 'string',
         'name' => 'string',
-        'enrollments'=> 'integer'
+        'enrollments' => 'integer',
+        'agents' => 'integer'
     ];
 
     /**
@@ -53,13 +92,6 @@ class District extends Model
         'code' => 'required',
         'name' => 'required'
     ];
-
-    public function agent(){
-        return $this->hasMany('App/Models/Agent');
-    }
-    public function member(){
-        return $this->hasMany('App/Models/Member');
-    }
 
 
 }

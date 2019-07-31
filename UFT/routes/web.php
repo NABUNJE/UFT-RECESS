@@ -18,20 +18,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home','DashboardController@index');
 
-//Route::get('/bar','chartController@index');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
-
-/*Route::get('/test',function(){
-    return view('test/index');
-});
-*/
-Route::get('/test','TestController@show');
-Route::get('/members/text','MemberController@rectext');
+Route::get('/test','MemberController@hix');
 
 Route::resource('agents', 'AgentController');
 

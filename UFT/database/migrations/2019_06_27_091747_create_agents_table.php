@@ -17,6 +17,8 @@ class CreateAgentsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('district');
+            $table->string('role')->default('Agent');
+            $table->unsignedDecimal('salary',12,2)->default(0);
             $table->string('signature');
             $table->softDeletes('deleted_at');
             $table->timestamps();

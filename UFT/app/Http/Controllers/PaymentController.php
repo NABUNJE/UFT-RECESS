@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\PaymentDataTable;
+use App\Http\Requests;
 use App\Http\Requests\CreatePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Repositories\PaymentRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Flash;
+use App\Http\Controllers\AppBaseController;
 use Response;
 
 class PaymentController extends AppBaseController
@@ -23,16 +28,12 @@ class PaymentController extends AppBaseController
     /**
      * Display a listing of the Payment.
      *
-     * @param Request $request
-     *
+     * @param PaymentDataTable $paymentDataTable
      * @return Response
      */
-    public function index(Request $request)
+    public function index(PaymentDataTable $paymentDataTable)
     {
-        $payments = $this->paymentRepository->all();
-
-        return view('payments.index')
-            ->with('payments', $payments);
+        return $paymentDataTable->render('payments.index');
     }
 
     /**
@@ -66,7 +67,7 @@ class PaymentController extends AppBaseController
     /**
      * Display the specified Payment.
      *
-     * @param int $id
+     * @param  int $id
      *
      * @return Response
      */
@@ -86,7 +87,7 @@ class PaymentController extends AppBaseController
     /**
      * Show the form for editing the specified Payment.
      *
-     * @param int $id
+     * @param  int $id
      *
      * @return Response
      */
@@ -106,7 +107,7 @@ class PaymentController extends AppBaseController
     /**
      * Update the specified Payment in storage.
      *
-     * @param int $id
+     * @param  int              $id
      * @param UpdatePaymentRequest $request
      *
      * @return Response
@@ -131,9 +132,7 @@ class PaymentController extends AppBaseController
     /**
      * Remove the specified Payment from storage.
      *
-     * @param int $id
-     *
-     * @throws \Exception
+     * @param  int $id
      *
      * @return Response
      */

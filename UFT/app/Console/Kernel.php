@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\MemberUpload::class,
         Commands\EnrolNum::class,
         Commands\AgentNum::class,
+        Commands\PaymentUpdate::class,
     ];
 
     /**
@@ -34,6 +35,8 @@ class Kernel extends ConsoleKernel
                  ->everyMinute();
         $schedule->command('agent:number')
                  ->everyMinute();
+        $schedule->command('pay:update')
+                  ->hourly();
 
     }
 

@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\DistrictDataTable;
+use App\Http\Requests;
 use App\Http\Requests\CreateDistrictRequest;
 use App\Http\Requests\UpdateDistrictRequest;
 use App\Repositories\DistrictRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Flash;
+use App\Http\Controllers\AppBaseController;
 use Response;
 
 class DistrictController extends AppBaseController
@@ -25,16 +28,12 @@ class DistrictController extends AppBaseController
     /**
      * Display a listing of the District.
      *
-     * @param Request $request
-     *
+     * @param DistrictDataTable $districtDataTable
      * @return Response
      */
-    public function index(Request $request)
+    public function index(DistrictDataTable $districtDataTable)
     {
-        $districts = $this->districtRepository->all();
-
-        return view('districts.index')
-            ->with('districts', $districts);
+        return $districtDataTable->render('districts.index');
     }
 
     /**

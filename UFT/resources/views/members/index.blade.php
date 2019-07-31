@@ -3,8 +3,6 @@
 @section('content')
     <section class="content-header">
         <h1 class="pull-left">Members</h1>
-        <h1 class="pull-right">
-        </h1>
     </section>
     <div class="content">
         <div class="clearfix"></div>

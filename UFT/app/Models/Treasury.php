@@ -6,13 +6,51 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Treasury
- * @package App\Models
- * @version June 27, 2019, 10:29 am UTC
- *
- * @property float amount
- * @property string well_wisher
- * @property string received_on
+ * @SWG\Definition(
+ *      definition="Treasury",
+ *      required={""},
+ *      @SWG\Property(
+ *          property="id",
+ *          description="id",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="amount",
+ *          description="amount",
+ *          type="float",
+ *          format="float"
+ *      ),
+ *      @SWG\Property(
+ *          property="well_wisher",
+ *          description="well_wisher",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="received_on",
+ *          description="received_on",
+ *          type="string",
+ *          format="date"
+ *      ),
+ *      @SWG\Property(
+ *          property="deleted_at",
+ *          description="deleted_at",
+ *          type="string",
+ *          format="date-time"
+ *      ),
+ *      @SWG\Property(
+ *          property="created_at",
+ *          description="created_at",
+ *          type="string",
+ *          format="date-time"
+ *      ),
+ *      @SWG\Property(
+ *          property="updated_at",
+ *          description="updated_at",
+ *          type="string",
+ *          format="date-time"
+ *      )
+ * )
  */
 class Treasury extends Model
 {
@@ -41,8 +79,8 @@ class Treasury extends Model
     protected $casts = [
         'id' => 'integer',
         'amount' => 'float',
-        'well-wisher' => 'string',
-        'received-on' => 'date'
+        'well_wisher' => 'string',
+        'received_on' => 'date'
     ];
 
     /**
