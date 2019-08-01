@@ -64,7 +64,6 @@ class Member extends Model
     public static $rules = [
         'name' => 'required',
         'district' => 'required',
-        'recommender' => 'required',
         'DateOfEnroll' => 'required',
         'gender' => 'required',
         'agent' => 'required'

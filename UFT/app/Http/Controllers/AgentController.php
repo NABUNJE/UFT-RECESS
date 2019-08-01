@@ -56,16 +56,21 @@ class AgentController extends AppBaseController
     public function store(CreateAgentRequest $request)
     {
         $input = $request->all();
+
         $min = DB::table('districts')->min('agents');
         $minDistrict = DB::table('districts')
             ->where('agents',$min)
             ->pluck('name')
             ->first();
+        if($min == 0){
+            $minDistrict = ['district'=>$minDistrict,'role'=>'Agent-Head'];
+        }
+        else{
+            $minDistrict = ['district'=>$minDistrict];
 
-        $minDistrict = ['district'=>$minDistrict];
+        }
 
         $input = array_merge($input,$minDistrict);
-
         $agent = $this->agentRepository->create($input);
 
         Flash::success('Agent saved successfully.');

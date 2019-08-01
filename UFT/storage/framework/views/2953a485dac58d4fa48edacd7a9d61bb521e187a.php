@@ -19,11 +19,11 @@
 </li>
 
 <li class="<?php echo e(Request::is('members*') ? 'active' : ''); ?>">
-    <a href="<?php echo route('members.index'); ?>"><i class="fa fa-edit"></i><span>Members</span></a>
+    <a href="<?php echo e(url('/test')); ?>"><i class="fa fa-edit"></i><span>Members</span></a>
 </li>
 
 <li>
-    <a href="<?php echo e(url('/bar')); ?>"><i class="fa fa-edit"></i><span>Charts</span></a>
+    <a href="<?php echo e(url('/bar')); ?>"><i class="fa fa-fw fa-bar-chart"></i><span>Charts</span></a>
 </li>
 
 <?php /**PATH /home/hix/UFT-RECESS/UFT/resources/views/layouts/menu.blade.php ENDPATH**/ ?>

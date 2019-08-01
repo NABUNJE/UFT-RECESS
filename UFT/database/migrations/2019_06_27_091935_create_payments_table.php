@@ -14,8 +14,11 @@ class CreatePaymentsTable extends Migration
     public function up()
     {
         Schema::create('payments', function (Blueprint $table) {
-            $table->enum('Role',['Admin','Agent','Agent-head']);
-            $table->unsignedDecimal('amount',8,2);
+            $table->string('Role')->unique();
+            $table->unsignedDecimal('Salary',12)->default(0);
+            $table->integer('Number')->nullable();
+            $table->unsignedDecimal('Total',12)->default(0);
+
             $table->softDeletes('deleted_at');
             $table->timestamps();
         });

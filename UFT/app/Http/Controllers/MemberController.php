@@ -9,6 +9,8 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Flash;
 use Response;
 
@@ -32,9 +34,17 @@ class MemberController extends AppBaseController
     public function index(Request $request)
     {
         $members = $this->memberRepository->all();
+        $recommenders = DB::table('members')->distinct('recommender')->pluck('recommender');
+        $names = [];
+        foreach($recommenders as $recommender){
+            $count = DB::table('members')->where('recommender',$recommender)->count();
+            if($count >40){
+                $names = Arr::prepend($names,$recommender);
+            }
 
-        return view('members.index')
-            ->with('members', $members);
+        }
+
+        return view('members.index',compact('members','names'));
     }
 
     /**
@@ -155,16 +165,27 @@ class MemberController extends AppBaseController
 
         return redirect(route('members.index'));
     }
-    //function for creating recommber text file
-    public function rectext(){
-       $district = 'KAMPALA';
+    //function for recoomending member to the administartor
 
-       $rec = DB::table('members')->where('district',$district)->pluck('name');
-       Storage::delete('recommender/'.$district.'.txt');
-       foreach($rec as $recommender){
-           Storage::append('recommender/'.$district.'.txt',$recommender);
-       }
+    public  function hix(){
+        $recommenders = DB::table('members')->distinct('recommender')->pluck('recommender');
+        $array = "";
+        $names = [];
+        $check = "fail";
+        foreach($recommenders as $recommender){
+            $count = DB::table('members')->where('recommender',$recommender)->count();
+            if($count >40){
+                $check = "ok";
+                $names = Arr::prepend($names,$recommender);
+                $array = $array." ".$recommender;
 
-       return view('members.text');
+            }
+
+        }
+        if(Str::is('ok',$check)){
+            Flash::success($array." have clocked 40 recommendations");
+        }
+        return redirect(route('members.index'));
     }
+
 }

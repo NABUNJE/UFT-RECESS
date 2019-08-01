@@ -13,7 +13,7 @@ class chartController extends Controller
     //
      public function index()
     {
-        $perc = DB::select(DB::raw("SELECT DATE_FORMAT(created_at,'%M %Y') as month,COUNT(*) as total from members GROUP BY month"));
+        $perc = DB::select(DB::raw("SELECT DATE_FORMAT(DateOfEnroll,'%M %Y') as month,COUNT(*) as total from members GROUP BY month"));
 
 
 // SELECT  month(created_at) as month,COUNT(*) as total from members GROUP BY month (created_at)
@@ -35,8 +35,9 @@ class chartController extends Controller
     // return $month;
         $chart1 = Charts::create('bar', 'highcharts')
 			      ->title("Percentage Change")
-                  ->elementLabel("Per months")
+                  ->elementLabel("Percentage Change")
                   ->labels($month)
+                  ->colors(['#008000', '#FFFF00','#800000'])
                   ->dimensions(1000, 500)
                   ->values($updatedvalue)
                   ->responsive(false);
@@ -46,11 +47,12 @@ class chartController extends Controller
 //$users= DB::table('treasury')->pluck('amount')->get();
 //treasury::where(\DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'),
     				//(\DB::raw("amount")))
-$users = treasury::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'))->get();
-        $chart= Charts::database($users, 'bar', 'highcharts')
-			      ->title("Funding per month and per period")
-			      ->elementLabel("Per months")
-			      ->dimensions(1000, 500)
+$users = treasury::where(DB::raw("(DATE_FORMAT(received_on,'%Y'))"),date('Y'))->get();
+        $chart= Charts::database($users, 'bar', 'chartjs')
+			      ->title("Funding Per Month")
+			      ->elementLabel("funds")
+                  ->dimensions(1000, 500)
+                  ->colors(['#008000', '#4B0082','#800000'])
                   ->responsive(false)
 			      ->groupByMonth(date('Y'), true);
         return view('chart',compact('chart1','chart'));

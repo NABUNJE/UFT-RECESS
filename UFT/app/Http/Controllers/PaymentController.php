@@ -7,6 +7,10 @@ use App\Http\Requests\UpdatePaymentRequest;
 use App\Repositories\PaymentRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 use Flash;
 use Response;
 

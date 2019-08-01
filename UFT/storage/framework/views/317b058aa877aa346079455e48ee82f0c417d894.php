@@ -4,6 +4,8 @@
             <tr>
                 <th>Name</th>
         <th>District</th>
+        <th>Role</th>
+        <th>Salary</th>
         <th>Signature</th>
                 <th colspan="3">Action</th>
             </tr>
@@ -13,7 +15,10 @@
             <tr>
                 <td><?php echo $agent->name; ?></td>
             <td><?php echo $agent->district; ?></td>
+            <td><?php echo $agent->role; ?></td>
+            <td><?php echo $agent->salary; ?></td>
             <td><?php echo $agent->signature; ?></td>
+
                 <td>
                     <?php echo Form::open(['route' => ['agents.destroy', $agent->id], 'method' => 'delete']); ?>
 

@@ -36,11 +36,23 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
 
+<style type="text/css">
+.content-wrapper{
+    background-image:url('images/Ubuntu.jpg');
+    background-size: 100%;
+}
+</style>
+
+
+
    {!! Charts::styles() !!}
     @yield('css')
 </head>
 
 <body class="skin-blue sidebar-mini">
+
+<img src="" height="350" width="350" class="img-circle" alt="User Image"/>
+
 @if (!Auth::guest())
     <div class="wrapper">
         <!-- Main Header -->
@@ -106,6 +118,7 @@
         @include('layouts.sidebar')
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
+            {{-- <img src="images/Ubuntu.jpg" height="750" width="750" class="img-circle" alt="User Image"/> --}}
             @yield('content')
         </div>
 
@@ -185,6 +198,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <script src="ad.js"></script>
+     @yield('scripts')
 
                <!-- SUB PAGES LOADERS -->
 <!-- jQuery 3 -->

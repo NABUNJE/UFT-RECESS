@@ -20,7 +20,7 @@
                               <!-- small box -->
                               <div class="small-box bg-aqua">
                                 <div class="inner">
-                                  <h3>150</h3>
+                                  <h3><?php echo e($amount); ?></h3>
 
                                   <p>Finance</p>
                                 </div>

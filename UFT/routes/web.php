@@ -30,8 +30,9 @@ Route::get('/home', 'HomeController@index');
     return view('test/index');
 });
 */
-Route::get('/test','TestController@show');
-Route::get('/members/text','MemberController@rectext');
+Route::get('/test','MemberController@hix');
+
+Route::get('/testx','MemberController@test');
 
 Route::resource('agents', 'AgentController');
 
@@ -46,3 +47,9 @@ Route::resource('members', 'MemberController');
 Route::resource('dashboard', 'DashboardController');
 
 Route::get('/bar','chartController@index');
+
+Route::post('/period','charts2@period');
+
+Route::get('/tra',function(){
+    return view('chartsnew');
+});

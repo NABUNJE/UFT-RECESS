@@ -47,8 +47,7 @@ class Payment extends Model
      * @var array
      */
     public static $rules = [
-        'Role' => 'required',
-        'amount' => 'required'
+        'Role' => 'required'
     ];
 
     public function agent(){

@@ -7,7 +7,7 @@
 <!-- Amount Field -->
 <div class="form-group">
     {!! Form::label('amount', 'Amount:') !!}
-    <p>{!! $payment->amount !!}</p>
+    <p>{!! $payment->Salary !!}</p>
 </div>
 
 <!-- Created At Field -->

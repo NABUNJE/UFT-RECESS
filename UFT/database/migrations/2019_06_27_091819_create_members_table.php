@@ -17,7 +17,7 @@ class CreateMembersTable extends Migration
             $table->string('id')->unique();
             $table->string('name');
             $table->string('district');
-            $table->string('recommender');
+            $table->string('recommender')->nullable();
             $table->date('DateOfEnroll');
             $table->enum('gender',['F','M']);
             $table->string('agent');

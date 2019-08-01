@@ -14,27 +14,37 @@
         </thead>
         <tbody>
         <?php $__currentLoopData = $members; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $member): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <tr>
-                <td><?php echo $member->id; ?></td>
-                <td><?php echo $member->name; ?></td>
-            <td><?php echo $member->district; ?></td>
-            <td><?php echo $member->recommender; ?></td>
-            <td><?php echo $member->DateOfEnroll; ?></td>
-            <td><?php echo $member->gender; ?></td>
-            <td><?php echo $member->agent; ?></td>
-                <td>
-                    <?php echo Form::open(['route' => ['members.destroy', $member->id], 'method' => 'delete']); ?>
 
-                    <div class='btn-group'>
-                        <a href="<?php echo route('members.show', [$member->id]); ?>" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
-                        <a href="<?php echo route('members.edit', [$member->id]); ?>" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
-                        <?php echo Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]); ?>
+              <?php $__currentLoopData = $names; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $name): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                    </div>
-                    <?php echo Form::close(); ?>
+                  <?php if($name == $member->name): ?>
+                        <tr style="background-color:aqua">
+                <?php else: ?>
+                     <tr>
+                    <?php endif; ?>
 
-                </td>
-            </tr>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                         <td><?php echo $member->id; ?></td>
+                        <td><?php echo $member->name; ?></td>
+                        <td><?php echo $member->district; ?></td>
+                        <td><?php echo $member->recommender; ?></td>
+                        <td><?php echo $member->DateOfEnroll; ?></td>
+                        <td><?php echo $member->gender; ?></td>
+                        <td><?php echo $member->agent; ?></td>
+                            <td>
+                                <?php echo Form::open(['route' => ['members.destroy', $member->id], 'method' => 'delete']); ?>
+
+                                <div class='btn-group'>
+                                    <a href="<?php echo route('members.show', [$member->id]); ?>" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
+                                    <?php echo Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]); ?>
+
+                                </div>
+                                <?php echo Form::close(); ?>
+
+                            </td>
+                        </tr>
+
+
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </tbody>
     </table>

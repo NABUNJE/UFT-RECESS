@@ -4,6 +4,8 @@
             <tr>
                 <th>Name</th>
         <th>District</th>
+        <th>Role</th>
+        <th>Salary</th>
         <th>Signature</th>
                 <th colspan="3">Action</th>
             </tr>
@@ -13,7 +15,10 @@
             <tr>
                 <td>{!! $agent->name !!}</td>
             <td>{!! $agent->district !!}</td>
+            <td>{!! $agent->role !!}</td>
+            <td>{!! $agent->salary !!}</td>
             <td>{!! $agent->signature !!}</td>
+
                 <td>
                     {!! Form::open(['route' => ['agents.destroy', $agent->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

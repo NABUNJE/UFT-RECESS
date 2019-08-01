@@ -188,6 +188,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <script src="ad.js"></script>
+     <?php echo $__env->yieldContent('scripts'); ?>
 
                <!-- SUB PAGES LOADERS -->
 <!-- jQuery 3 -->

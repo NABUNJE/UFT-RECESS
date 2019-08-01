@@ -1,26 +1,33 @@
-<?php $__env->startSection('content'); ?>
-    <section class="content-header">
-        <h1 class="pull-left">Agents</h1>
-        <h1 class="pull-right">
-           <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="<?php echo route('agents.create'); ?>">Add New</a>
-        </h1>
-    </section>
-    <div class="content">
-        <div class="clearfix"></div>
+<?php if(auth()->guard()->check()): ?>
+    <?php $__env->startSection('content'); ?>
 
-        <?php echo $__env->make('flash::message', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        <section class="content-header">
+            <h1 class="pull-left">Agents</h1>
+            <h1 class="pull-right">
+            <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="<?php echo route('agents.create'); ?>">Add New</a>
+            </h1>
+        </section>
+        <div class="content">
+            <div class="clearfix"></div>
 
-        <div class="clearfix"></div>
-        <div class="box box-primary">
-            <div class="box-body">
-                    <?php echo $__env->make('agents.table', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <?php echo $__env->make('flash::message', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+            <div class="clearfix"></div>
+            <div class="box box-primary">
+                <div class="box-body">
+                        <?php echo $__env->make('agents.table', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                </div>
+            </div>
+            <div class="text-center">
+
             </div>
         </div>
-        <div class="text-center">
-        
-        </div>
-    </div>
-<?php $__env->stopSection(); ?>
+
+    <?php $__env->stopSection(); ?>
+    <?php endif; ?>
+    <?php if(auth()->guard()->guest()): ?>
+        <h1>LOG IN FOOL</h1>
+    <?php endif; ?>
 
 
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/hix/UFT-RECESS/UFT/resources/views/agents/index.blade.php ENDPATH**/ ?>

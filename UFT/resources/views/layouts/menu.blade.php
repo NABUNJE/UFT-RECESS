@@ -19,10 +19,15 @@
 </li>
 
 <li class="{{ Request::is('members*') ? 'active' : '' }}">
-    <a href="{!! route('members.index') !!}"><i class="fa fa-edit"></i><span>Members</span></a>
+    <a href="{{ url('/test') }}"><i class="fa fa-edit"></i><span>Members</span></a>
 </li>
 
 <li>
-    <a href="{{ url('/bar') }}"><i class="fa fa-edit"></i><span>Charts</span></a>
+    <a href="{{ url('/bar') }}"><i class="fa fa-fw fa-bar-chart"></i><span>Charts</span></a>
 </li>
+
+<li>
+    <a href="{{ url('/tra') }}"><i class="fa fa-fw fa-bar-chart"></i><span>Charts2</span></a>
+</li>
+
 

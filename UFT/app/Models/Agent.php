@@ -31,7 +31,9 @@ class Agent extends Model
     public $fillable = [
         'name',
         'signature',
-        'district'
+        'district',
+        'salary',
+        'role'
     ];
 
     /**
@@ -43,7 +45,9 @@ class Agent extends Model
         'id' => 'integer',
         'name' => 'string',
         'district' => 'string',
-        'signature' => 'string'
+        'signature' => 'string',
+        'salary'=>'float',
+        'role'=>'string'
     ];
 
     /**

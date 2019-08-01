@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Dashboard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
@@ -14,7 +18,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        $amount = DB::table('treasury')->sum('amount');
+        return view('dashboard.index')->with('amount',$amount);
     }
 
     /**

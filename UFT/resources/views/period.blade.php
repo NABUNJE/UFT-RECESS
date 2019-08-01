@@ -8,16 +8,14 @@
                 <div class="panel-heading">Chart Demo</div>
 
                 <div class="panel-body">
-                    {!! $chart->html() !!}
-                    {!! $chart1->html() !!}
-                    {{-- {!! $cha->html() !!} --}}
+
+                    {!! $cha->html() !!}
                 </div>
             </div>
         </div>
     </div>
 </div>
 {!! Charts::scripts() !!}
-{!! $chart->script() !!}
-{!! $chart1->script() !!}
-{{-- {!! $cha->script() !!} --}}
+
+{!! $cha->script() !!}
 @endsection
