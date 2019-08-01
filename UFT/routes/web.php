@@ -18,8 +18,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home','DashboardController@index');
 
+<<<<<<< HEAD
 //Route::get('/bar','chartController@index');
 
 Auth::routes();
@@ -33,6 +34,9 @@ Route::get('/home', 'HomeController@index');
 Route::get('/test','MemberController@hix');
 
 Route::get('/testx','MemberController@test');
+=======
+Route::get('/test','MemberController@hix');
+>>>>>>> 236792f5ad063b3b68d60be9f843ae454ec0c4cd
 
 Route::resource('agents', 'AgentController');
 

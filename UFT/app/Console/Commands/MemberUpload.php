@@ -52,7 +52,6 @@ class MemberUpload extends Command
            $signblast =explode(".",$district);
 
            if(Str::is('sign',$signblast[1])){
-
               $signtext = Storage::get($district);
               $district = explode("/",$signblast[0]);
               $wrongsigns=[];
@@ -70,8 +69,11 @@ class MemberUpload extends Command
                   if(!isset($signx[1])){
                       continue;
                   }
+
                   //store all the client socket numnbers for identification
                   $allsigns = Arr::add($allsigns,$signx[0],$signx[1]);
+
+
                 }
                foreach($split[0] as $key){
                     if(Arr::has($allsigns,$key)){
@@ -81,6 +83,7 @@ class MemberUpload extends Command
                         }
                         else{
                             $wrongsigns = Arr::prepend($wrongsigns,$key.":".$allsigns[$key]);
+
                         }
                         $outer++;
                     }

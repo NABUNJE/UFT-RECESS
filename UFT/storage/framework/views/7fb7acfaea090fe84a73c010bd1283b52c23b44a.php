@@ -2,7 +2,7 @@
 <div class="form-group col-sm-6">
     <?php echo Form::label('name', 'Name:'); ?>
 
-    <?php echo Form::text('name', null, ['class' => 'form-control']); ?>
+    <?php echo Form::text('name', $member->name, ['class' => 'form-control']); ?>
 
 </div>
 

@@ -23,10 +23,8 @@
 
             </div>
         </div>
-
-    @endsection
-    @endauth
-    @guest
-        <h1>LOG IN FOOL</h1>
-    @endguest
+        <div class="text-center">
+        </div>
+    </div>
+@endsection
 

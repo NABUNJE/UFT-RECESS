@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\TreasuryDataTable;
+use App\Http\Requests;
 use App\Http\Requests\CreateTreasuryRequest;
 use App\Http\Requests\UpdateTreasuryRequest;
 use App\Repositories\TreasuryRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Flash;
+use App\Http\Controllers\AppBaseController;
 use Response;
 
 class TreasuryController extends AppBaseController
@@ -23,16 +28,12 @@ class TreasuryController extends AppBaseController
     /**
      * Display a listing of the Treasury.
      *
-     * @param Request $request
-     *
+     * @param TreasuryDataTable $treasuryDataTable
      * @return Response
      */
-    public function index(Request $request)
+    public function index(TreasuryDataTable $treasuryDataTable)
     {
-        $treasuries = $this->treasuryRepository->all();
-
-        return view('treasuries.index')
-            ->with('treasuries', $treasuries);
+        return $treasuryDataTable->render('treasuries.index');
     }
 
     /**
@@ -66,7 +67,7 @@ class TreasuryController extends AppBaseController
     /**
      * Display the specified Treasury.
      *
-     * @param int $id
+     * @param  int $id
      *
      * @return Response
      */
@@ -86,7 +87,7 @@ class TreasuryController extends AppBaseController
     /**
      * Show the form for editing the specified Treasury.
      *
-     * @param int $id
+     * @param  int $id
      *
      * @return Response
      */
@@ -106,7 +107,7 @@ class TreasuryController extends AppBaseController
     /**
      * Update the specified Treasury in storage.
      *
-     * @param int $id
+     * @param  int              $id
      * @param UpdateTreasuryRequest $request
      *
      * @return Response
@@ -131,9 +132,7 @@ class TreasuryController extends AppBaseController
     /**
      * Remove the specified Treasury from storage.
      *
-     * @param int $id
-     *
-     * @throws \Exception
+     * @param  int $id
      *
      * @return Response
      */

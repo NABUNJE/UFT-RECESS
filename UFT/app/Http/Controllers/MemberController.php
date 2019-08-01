@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\MemberDataTable;
+use App\Http\Requests;
 use App\Http\Requests\CreateMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
 use App\Repositories\MemberRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Flash;
+use App\Http\Controllers\AppBaseController;
 use Response;
 
 class MemberController extends AppBaseController
@@ -27,13 +28,11 @@ class MemberController extends AppBaseController
     /**
      * Display a listing of the Member.
      *
-     * @param Request $request
-     *
+     * @param MemberDataTable $memberDataTable
      * @return Response
      */
-    public function index(Request $request)
+    public function index(MemberDataTable $memberDataTable)
     {
-        $members = $this->memberRepository->all();
         $recommenders = DB::table('members')->distinct('recommender')->pluck('recommender');
         $names = [];
         foreach($recommenders as $recommender){
@@ -43,8 +42,7 @@ class MemberController extends AppBaseController
             }
 
         }
-
-        return view('members.index',compact('members','names'));
+        return $memberDataTable->render('members.index');
     }
 
     /**
@@ -52,9 +50,10 @@ class MemberController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
+    public function edit($id)
     {
-        return view('members.create');
+        $member = $this->memberRepository->find($id);
+        return view('agents.create')->with('member',$member);
     }
 
     /**
@@ -64,21 +63,11 @@ class MemberController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateMemberRequest $request)
-    {
-        $input = $request->all();
-
-        $member = $this->memberRepository->create($input);
-
-        Flash::success('Member saved successfully.');
-
-        return redirect(route('members.index'));
-    }
 
     /**
      * Display the specified Member.
      *
-     * @param int $id
+     * @param  int $id
      *
      * @return Response
      */
@@ -98,47 +87,20 @@ class MemberController extends AppBaseController
     /**
      * Show the form for editing the specified Member.
      *
-     * @param int $id
+     * @param  int $id
      *
      * @return Response
      */
-    public function edit($id)
-    {
-        $member = $this->memberRepository->find($id);
-
-        if (empty($member)) {
-            Flash::error('Member not found');
-
-            return redirect(route('members.index'));
-        }
-
-        return view('members.edit')->with('member', $member);
-    }
 
     /**
      * Update the specified Member in storage.
      *
-     * @param int $id
+     * @param  int              $id
      * @param UpdateMemberRequest $request
      *
      * @return Response
      */
-    public function update($id, UpdateMemberRequest $request)
-    {
-        $member = $this->memberRepository->find($id);
 
-        if (empty($member)) {
-            Flash::error('Member not found');
-
-            return redirect(route('members.index'));
-        }
-
-        $member = $this->memberRepository->update($request->all(), $id);
-
-        Flash::success('Member updated successfully.');
-
-        return redirect(route('members.index'));
-    }
 
     /**
      * Remove the specified Member from storage.

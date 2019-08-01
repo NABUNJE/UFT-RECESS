@@ -120,7 +120,7 @@ return [
 
         'softDelete' => true,
 
-        'tables_searchable_default' => false,
+        'tables_searchable_default' => true,
 
         'excluded_fields' => ['id'], // Array of columns that doesn't required while creating module
     ],
@@ -152,11 +152,11 @@ return [
 
     'add_on' => [
 
-        'swagger'       => false,
+        'swagger'       => true,
 
-        'tests'         => true,
+        'tests'         => false,
 
-        'datatables'    => false,
+        'datatables'    => true,
 
         'menu'          => [
 

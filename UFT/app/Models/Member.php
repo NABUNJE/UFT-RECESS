@@ -6,17 +6,64 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Member
- * @package App\Models
- * @version June 27, 2019, 10:32 am UTC
- *
- * @property string id
- * @property string name
- * @property string district
- * @property string recommender
- * @property string DateOfEnroll
- * @property string gender
- * @property string agent
+ * @SWG\Definition(
+ *      definition="Member",
+ *      required={""},
+ *      @SWG\Property(
+ *          property="id",
+ *          description="id",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="name",
+ *          description="name",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="district",
+ *          description="district",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="recommender",
+ *          description="recommender",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="DateOfEnroll",
+ *          description="DateOfEnroll",
+ *          type="string",
+ *          format="date"
+ *      ),
+ *      @SWG\Property(
+ *          property="gender",
+ *          description="gender",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="agent",
+ *          description="agent",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="deleted_at",
+ *          description="deleted_at",
+ *          type="string",
+ *          format="date-time"
+ *      ),
+ *      @SWG\Property(
+ *          property="created_at",
+ *          description="created_at",
+ *          type="string",
+ *          format="date-time"
+ *      ),
+ *      @SWG\Property(
+ *          property="updated_at",
+ *          description="updated_at",
+ *          type="string",
+ *          format="date-time"
+ *      )
+ * )
  */
 class Member extends Model
 {
@@ -68,8 +115,13 @@ class Member extends Model
         'gender' => 'required',
         'agent' => 'required'
     ];
+
     public function agent(){
         $this->belongsTo('App/Models/Agent');
+    }
+
+    public function district(){
+        $this->belongsTo('App/Models/District');
     }
 
 

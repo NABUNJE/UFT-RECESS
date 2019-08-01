@@ -19,7 +19,14 @@ class DashboardController extends Controller
     public function index()
     {
         $amount = DB::table('treasury')->sum('amount');
-        return view('dashboard.index')->with('amount',$amount);
+        $salaries = $amount-2000000;
+        $members = DB::table('members')->count();
+        $agents= DB::table('agents')->count();
+        $district = DB::table('districts')->count();
+
+
+
+        return view('dashboard.index',compact('amount','salaries','members','agents','district'));
     }
 
     /**

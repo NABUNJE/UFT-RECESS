@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\AgentDataTable;
+use App\Http\Requests;
 use App\Http\Requests\CreateAgentRequest;
 use App\Http\Requests\UpdateAgentRequest;
 use App\Repositories\AgentRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Flash;
+use App\Http\Controllers\AppBaseController;
 use Response;
 
 class AgentController extends AppBaseController
@@ -24,16 +28,12 @@ class AgentController extends AppBaseController
     /**
      * Display a listing of the Agent.
      *
-     * @param Request $request
-     *
+     * @param AgentDataTable $agentDataTable
      * @return Response
      */
-    public function index(Request $request)
+    public function index(AgentDataTable $agentDataTable)
     {
-        $agents = $this->agentRepository->all();
-
-        return view('agents.index')
-            ->with('agents', $agents);
+        return $agentDataTable->render('agents.index');
     }
 
     /**
@@ -81,7 +81,7 @@ class AgentController extends AppBaseController
     /**
      * Display the specified Agent.
      *
-     * @param int $id
+     * @param  int $id
      *
      * @return Response
      */
@@ -101,7 +101,7 @@ class AgentController extends AppBaseController
     /**
      * Show the form for editing the specified Agent.
      *
-     * @param int $id
+     * @param  int $id
      *
      * @return Response
      */
@@ -121,7 +121,7 @@ class AgentController extends AppBaseController
     /**
      * Update the specified Agent in storage.
      *
-     * @param int $id
+     * @param  int              $id
      * @param UpdateAgentRequest $request
      *
      * @return Response
@@ -146,9 +146,7 @@ class AgentController extends AppBaseController
     /**
      * Remove the specified Agent from storage.
      *
-     * @param int $id
-     *
-     * @throws \Exception
+     * @param  int $id
      *
      * @return Response
      */

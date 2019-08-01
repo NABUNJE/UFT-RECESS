@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 <?php if(auth()->guard()->check()): ?>
     <?php $__env->startSection('content'); ?>
+=======
+<?php $__env->startSection('content'); ?>
+    <section class="content-header">
+        <h1 class="pull-left">Agents</h1>
+    </section>
+    <div class="content">
+        <div class="clearfix"></div>
+>>>>>>> 236792f5ad063b3b68d60be9f843ae454ec0c4cd
 
         <section class="content-header">
             <h1 class="pull-left">Agents</h1>
@@ -22,12 +31,19 @@
 
             </div>
         </div>
+<<<<<<< HEAD
 
     <?php $__env->stopSection(); ?>
     <?php endif; ?>
     <?php if(auth()->guard()->guest()): ?>
         <h1>LOG IN FOOL</h1>
     <?php endif; ?>
+=======
+        <div class="text-center">
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+>>>>>>> 236792f5ad063b3b68d60be9f843ae454ec0c4cd
 
 
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/hix/UFT-RECESS/UFT/resources/views/agents/index.blade.php ENDPATH**/ ?>

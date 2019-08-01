@@ -4,12 +4,6 @@
     <p>{!! $payment->Role !!}</p>
 </div>
 
-<!-- Amount Field -->
-<div class="form-group">
-    {!! Form::label('amount', 'Amount:') !!}
-    <p>{!! $payment->Salary !!}</p>
-</div>
-
 <!-- Created At Field -->
 <div class="form-group">
     {!! Form::label('created_at', 'Created At:') !!}

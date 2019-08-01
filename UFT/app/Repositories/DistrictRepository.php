@@ -8,7 +8,7 @@ use App\Repositories\BaseRepository;
 /**
  * Class DistrictRepository
  * @package App\Repositories
- * @version June 27, 2019, 10:31 am UTC
+ * @version July 30, 2019, 10:54 am UTC
 */
 
 class DistrictRepository extends BaseRepository
@@ -19,7 +19,8 @@ class DistrictRepository extends BaseRepository
     protected $fieldSearchable = [
         'code',
         'name',
-        'enrollments'
+        'enrollments',
+        'agents'
     ];
 
     /**

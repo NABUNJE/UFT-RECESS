@@ -109,7 +109,7 @@ void sign(char password[]){
             break;
         }
     }
-    if (found = 0)
+    if (found == 0)
     {
         puts("Wrong password was entered");
     }

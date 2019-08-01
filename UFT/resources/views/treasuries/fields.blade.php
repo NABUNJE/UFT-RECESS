@@ -4,24 +4,23 @@
     {!! Form::number('amount', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Well-Wisher Field -->
+<!-- Well Wisher Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('well-wisher', 'Well-Wisher:') !!}
+    {!! Form::label('well_wisher', 'Well Wisher:') !!}
     {!! Form::text('well_wisher', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Received-On Field -->
-
+<!-- Received On Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('received-on', 'Received-On:') !!}
-    {!! Form::date('received_on', null, ['class' => 'form-control','id'=>'received-on']) !!}
+    {!! Form::label('received_on', 'Received On:') !!}
+    {!! Form::date('received_on', null, ['class' => 'form-control','id'=>'received_on']) !!}
 </div>
 
 @section('scripts')
     <script type="text/javascript">
-        $('#received-on').datetimepicker({
-            format: 'YYYY-MM-DD',
-            useCurrent: true
+        $('#received_on').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            useCurrent: false
         })
     </script>
 @endsection

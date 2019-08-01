@@ -10,7 +10,13 @@
         <div class="content">
             <div class="clearfix"></div>
 
-            @include('flash::message')
+@section('content')
+    <section class="content-header">
+        <h1 class="pull-left">Payments</h1>
+
+    </section>
+    <div class="content">
+        <div class="clearfix"></div>
 
             <div class="clearfix"></div>
             <div class="box box-primary">
@@ -22,5 +28,14 @@
 
             </div>
         </div>
+<<<<<<< HEAD
     @endsection
 @endauth
+=======
+        <div class="text-center">
+
+        </div>
+    </div>
+@endsection
+
+>>>>>>> 236792f5ad063b3b68d60be9f843ae454ec0c4cd

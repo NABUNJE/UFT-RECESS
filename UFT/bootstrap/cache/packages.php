@@ -6,6 +6,18 @@
       0 => 'Appointer\\Swaggervel\\SwaggervelServiceProvider',
     ),
   ),
+  'barryvdh/laravel-snappy' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\Snappy\\ServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'PDF' => 'Barryvdh\\Snappy\\Facades\\SnappyPdf',
+      'SnappyImage' => 'Barryvdh\\Snappy\\Facades\\SnappyImage',
+    ),
+  ),
   'beyondcode/laravel-dump-server' => 
   array (
     'providers' => 
@@ -104,6 +116,17 @@
       'Html' => 'Collective\\Html\\HtmlFacade',
     ),
   ),
+  'maatwebsite/excel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
+    ),
+  ),
   'nesbot/carbon' => 
   array (
     'providers' => 
@@ -123,6 +146,31 @@
     'providers' => 
     array (
       0 => 'Prettus\\Repository\\Providers\\RepositoryServiceProvider',
+    ),
+  ),
+  'yajra/laravel-datatables-buttons' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Yajra\\DataTables\\ButtonsServiceProvider',
+    ),
+  ),
+  'yajra/laravel-datatables-html' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Yajra\\DataTables\\HtmlServiceProvider',
+    ),
+  ),
+  'yajra/laravel-datatables-oracle' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
     ),
   ),
 );

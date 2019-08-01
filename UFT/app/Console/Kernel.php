@@ -30,13 +30,13 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->command('member:upload')
-                 ->everyMinute();
+                 ->everyFiveMinutes();
         $schedule->command('enroll:number')
                  ->everyMinute();
         $schedule->command('agent:number')
                  ->everyMinute();
         $schedule->command('pay:update')
-                  ->everyMinute();
+                  ->everyFiveMinutes();
 
     }
 

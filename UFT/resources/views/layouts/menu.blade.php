@@ -3,19 +3,19 @@
 </li>
 
 <li class="{{ Request::is('agents*') ? 'active' : '' }}">
-    <a href="{!! route('agents.index') !!}"><i class="fa fa-edit"></i><span>Agents</span></a>
+    <a href="{!! route('agents.index') !!}"><i class="fa fa-fw fa-user-secret"></i><span>Agents</span></a>
 </li>
 
 <li class="{{ Request::is('treasuries*') ? 'active' : '' }}">
-    <a href="{!! route('treasuries.index') !!}"><i class="ion ion-cash"></i><span>Treasuries</span></a>
+    <a href="{!! route('treasuries.index') !!}"><i class="fa fa-fw fa-university"></i><span>Treasuries</span></a>
 </li>
 
 <li class="{{ Request::is('districts*') ? 'active' : '' }}">
-    <a href="{!! route('districts.index') !!}"><i class="fa fa-edit"></i><span>Districts</span></a>
+    <a href="{!! route('districts.index') !!}"><i class="fa fa-fw fa-map-o"></i><span>Districts</span></a>
 </li>
 
 <li class="{{ Request::is('payments*') ? 'active' : '' }}">
-    <a href="{!! route('payments.index') !!}"><i class="fa fa-edit"></i><span>Payments</span></a>
+    <a href="{!! route('payments.index') !!}"><i class="ion ion-cash"></i><span>Payments</span></a>
 </li>
 
 <li class="{{ Request::is('members*') ? 'active' : '' }}">

@@ -6,14 +6,60 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Agent
- * @package App\Models
- * @version June 27, 2019, 10:13 am UTC
- *
- * @property string name
- * @property string district
-
- * @property string signature
+ * @SWG\Definition(
+ *      definition="Agent",
+ *      required={""},
+ *      @SWG\Property(
+ *          property="id",
+ *          description="id",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="name",
+ *          description="name",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="district",
+ *          description="district",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="role",
+ *          description="role",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="salary",
+ *          description="salary",
+ *          type="float",
+ *          format="float"
+ *      ),
+ *      @SWG\Property(
+ *          property="signature",
+ *          description="signature",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="deleted_at",
+ *          description="deleted_at",
+ *          type="string",
+ *          format="date-time"
+ *      ),
+ *      @SWG\Property(
+ *          property="created_at",
+ *          description="created_at",
+ *          type="string",
+ *          format="date-time"
+ *      ),
+ *      @SWG\Property(
+ *          property="updated_at",
+ *          description="updated_at",
+ *          type="string",
+ *          format="date-time"
+ *      )
+ * )
  */
 class Agent extends Model
 {
@@ -45,9 +91,9 @@ class Agent extends Model
         'id' => 'integer',
         'name' => 'string',
         'district' => 'string',
-        'signature' => 'string',
-        'salary'=>'float',
-        'role'=>'string'
+        'role' => 'string',
+        'salary' => 'float',
+        'signature' => 'string'
     ];
 
     /**
@@ -60,6 +106,7 @@ class Agent extends Model
         'signature' => 'required'
     ];
 
+
     public function district(){
         return $this->belongsTo('App/Models/District');
     }
@@ -70,9 +117,5 @@ class Agent extends Model
     public function payment(){
         return $this -> hasMany('App/Model/Payment');
     }
-    public function Administrator(){
-        return $this->belongsTo('App/Model/Administrator');
-    }
-
 
 }

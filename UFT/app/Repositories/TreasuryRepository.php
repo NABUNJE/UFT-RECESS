@@ -8,7 +8,7 @@ use App\Repositories\BaseRepository;
 /**
  * Class TreasuryRepository
  * @package App\Repositories
- * @version June 27, 2019, 10:29 am UTC
+ * @version July 30, 2019, 11:10 am UTC
 */
 
 class TreasuryRepository extends BaseRepository
@@ -18,8 +18,8 @@ class TreasuryRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'amount',
-        'well-wisher',
-        'received-on'
+        'well_wisher',
+        'received_on'
     ];
 
     /**

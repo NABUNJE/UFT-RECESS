@@ -164,6 +164,9 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
+        Yajra\DataTables\ButtonsServiceProvider::class,
+        Yajra\DataTables\HtmlServiceProvider::class,
         \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
         \InfyOm\AdminLTETemplates\AdminLTETemplatesServiceProvider::class,
 
@@ -237,6 +240,7 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
     ],
 
