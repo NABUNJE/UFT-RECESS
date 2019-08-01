@@ -13,44 +13,115 @@
 
 #define PORT 4444
 
-void checker(int newSocket,char location[],char buffer[],char district[]){
+
+void replaceAll(char buffer[], char password[],char location[],char user[]){
+		FILE *fptr;
+		FILE *ftemp;
+		puts(location);
+		fptr = fopen(location,"r");
+		ftemp = fopen("replace.tmp","w");
+		char oldword[1024];
+
+		if(fptr == NULL || ftemp == NULL){
+			puts("UNREABALE");
+		}
+		else{
+			while(fgets(buffer,1024,fptr)!=NULL){
+				int totalRead = strlen(buffer);
+				buffer[totalRead - 1] = buffer[totalRead - 1] == '\n' ? '\0' : buffer[totalRead - 1];
+				if(strstr(buffer,user)!=NULL){
+					sprintf(oldword,"%s",buffer);
+					break;
+					}
+			}
+			rewind(fptr);
+			puts(oldword);
+
+			while(fgets(buffer,1024,fptr)!=NULL){
+					char *pos, temp[1024];
+					int index = 0;
+					int owlen;
+					owlen = strlen(oldword);
+
+					while((pos = strstr(buffer,oldword)) != NULL){
+						strcpy(temp,buffer);
+						index = pos - buffer;
+						buffer[index] = '\0';
+						strcat(buffer,password);
+						strcat(buffer,temp+index+owlen);
+					}
+					fputs(buffer,ftemp);
+
+			}
+			fclose(fptr);
+			fclose(ftemp);
+			remove(location);
+			rename("replace.tmp",location);	
+	    }
+
+}
+void checker(int newSocket,char location[],char buffer[],char district[],char status[]){
 		FILE *fptr;
 		char pitem[1024];
 		int words = 0;
+		char message[1024];
+		int clients =0;
+		int check;
 		fptr = fopen(location,"r");
-
+        
 		if(fptr ==NULL){
 			printf("file not found \n");
-			exit(EXIT_FAILURE);
-		}
-		//get the number of occurances of the item
-		while(fgets(pitem,1024,fptr)!=NULL){
-			int totalRead = strlen(pitem);
-
-			pitem[totalRead - 1] = pitem[totalRead - 1] == '\n' ? '\0' : pitem[totalRead - 1];
-
-			if(strstr(pitem,buffer)!=NULL){
-				words++;
+			if(strcmp(status,"ok")==0){
+                sprintf(message,"THE ENROLLMENT FILE IS COMPLETE AND VALID");
+				send(newSocket, message, sizeof(message),0);	
 			}
-
 		}
-		char size[1024];
-		sprintf(size,"%d",words);//int to string convertion
-		send(newSocket, size, sizeof(size),0);
-		rewind(fptr);
+		else{
+			//get the number of occurances of the item		
+			while(fgets(pitem,1024,fptr)!=NULL){
+				int totalRead = strlen(pitem);
 
-		while(fgets(pitem,1024,fptr)!=NULL){
-			int totalRead = strlen(pitem);
+				pitem[totalRead - 1] = pitem[totalRead - 1] == '\n' ? '\0' : pitem[totalRead - 1];
 
-			pitem[totalRead - 1] = pitem[totalRead - 1] == '\n' ? '\0' : pitem[totalRead - 1];
+				if(strstr(pitem,buffer)!=NULL){
+					words++;
+					check =1;
+				}
 
-			if(strstr(pitem,buffer)!=NULL){
+				clients++;
 
-				send(newSocket,pitem,sizeof(pitem),0);
-	
 			}
+			puts(status);
+			if(strcmp(status,"ok")==0){
+				puts("fish");
+				if(check == 1){
+					sprintf(message,"change");
+					send(newSocket,message,sizeof(message),0);
+					sprintf(message,"YOU HAVE A WRONG SIGNATURE AND %d OTHERS AGENTS",(clients-1));
+					send(newSocket,message,sizeof(message),0);
+				}
+				else{		
+					sprintf(message,"%d AGENT(S) HAVE WRONG SIGNATURES",clients);
+					send(newSocket,message,sizeof(message),0);
+				}
+			}
+		
+			else{
+				printf("%d\n",words);
+				send(newSocket, &words, sizeof(int),0);
+			
+				rewind(fptr);
 
-		}
+				while(fgets(pitem,1024,fptr)!=NULL){
+					int totalRead = strlen(pitem);
+					pitem[totalRead - 1] = pitem[totalRead - 1] == '\n' ? '\0' : pitem[totalRead - 1];
+					if(strstr(pitem,buffer)!=NULL){
+							send(newSocket,pitem,sizeof(pitem),0);			
+					}
+
+				}
+			}
+		}	
 					
 }
 int splitter(char data[],char check[],char dis[]){
@@ -74,7 +145,6 @@ int splitter(char data[],char check[],char dis[]){
 		fptr = fopen(location,"r");
 			if(fptr ==NULL){
 				printf("file not found \n");
-				exit(EXIT_FAILURE);
 			}
 			while(fgets(pitem,1024,fptr)!=NULL){
 				int totalRead = strlen(pitem);
@@ -103,14 +173,20 @@ int currdate(char timex[]){
 	return 0;
 }
 
-int addmember(char arr[],char dis[],char dater[]){
+int addmember(char arr[],char dis[],char dater[],char user[],char signchecker[]){
 	char location[1024];
+	if(strcmp(signchecker,"approve")==0){
+		puts("fish");
+		sprintf(location,"UFT/storage/app/enrollments/%s.sign",dis);
+	}
+	else{
 	sprintf(location,"UFT/storage/app/enrollments/%s.txt",dis);
+	sprintf(arr,"%s,%s,%s,%s",arr,user,dater,dis);
+	}
+
 
 	FILE *fp;
-	   fp =fopen(location,"a");
-	   //sprintf(arr,"%s %s %s %s",arr[0],dater,arr[1],arr[2]);
-	   sprintf(arr,"%s %s",arr,dater);
+	   fp =fopen(location,"a"); 
 	   fputs(arr,fp);
 	   fputs("\n",fp);
 	   fclose(fp);
@@ -140,18 +216,17 @@ int main(){
 
 	int newSocket;
 	struct sockaddr_in newAddr;
-
 	socklen_t addr_size;
 
-	char buffer[1024];
+	
 	pid_t childpid;
 
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if(sockfd < 0){
-		printf("[-]Error in connection.\n");
+		puts("[-]Error in connection.");
 		exit(1);
 	}
-	printf("[+]Server Socket is created.\n");
+	puts("[+]Server Socket is created.");
 
 	memset(&serverAddr, '\0', sizeof(serverAddr));
 	serverAddr.sin_family = AF_INET;
@@ -160,7 +235,7 @@ int main(){
 
 	ret = bind(sockfd, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
 	if(ret < 0){
-		printf("[-]Error in binding.\n");
+		puts("[-]Error in binding.");
 		exit(1);
 	}
 	printf("[+]Bind to port %d\n", 4444);
@@ -183,17 +258,18 @@ int main(){
 			close(sockfd);
 
 			while(1){
+	            char buffer[1024];
 				char district[1024];
+				char password[10];
 				char user[1024];
-
 				char cdate[1024];
-
 				currdate(cdate);
-
 				recv(newSocket,buffer,1024,0);
-
+                puts(buffer);
 				if(strcmp(buffer, "Addmember") == 0){
+					char signchecker[1024];
 					recv(newSocket,district,1024,0);
+					recv(newSocket,user,1024,0);
 					recv(newSocket,buffer,1024,0);
 
 					//variables to be used
@@ -205,13 +281,11 @@ int main(){
 						bzero(buffer,sizeof(buffer));
 						FILE *fp;
 						int ch = 0;
-						char filex[1024];
+						int words;
 						char location[1024];
 						sprintf(location,"UFT/storage/app/enrollments/%s.txt",district);
-
 						fp =fopen(location,"a");
-						recv(newSocket, filex, sizeof(filex),0);				
-						int words = atoi(filex); //string to int conversion
+						recv(newSocket, &words, sizeof(int),0);				
 						printf("%d\n",words);
 						while(ch != words){
 							recv(newSocket,buffer,1024,0);
@@ -219,22 +293,24 @@ int main(){
 							splitter(test,check,district);
 
 							if(strcmp(check,"ok")==0){
-								addmember(buffer,district,cdate);
+								puts("file ok");
+								addmember(buffer,district,cdate,user,signchecker);
 								sprintf(buffer,"COMMAND SUCCESFUL");
 								send(newSocket,buffer,sizeof(buffer),0);
+								
 
 							}
 							else{
+								puts("file failer");
 								sprintf(buffer,"RECOMMENDER NOT FOUND IN DATABASE");
 								send(newSocket,buffer,sizeof(buffer),0);
 
 							}
 							
 							ch++;
+							printf("%d\n",ch);
 						}
-						fputs("\n",fp);
 						fclose(fp);
-
 
 					}
 					else{
@@ -242,53 +318,98 @@ int main(){
 						splitter(test,check,district);
 
                         if(strcmp(check,"ok")==0){
-							addmember(buffer,district,cdate);
+							puts("add ok");
+							addmember(buffer,district,cdate,user,signchecker);
 							sprintf(buffer,"COMMAND SUCCESFUL");
 							send(newSocket,buffer,sizeof(buffer),0);
 
 						}
 						else{
+							puts("add failer");
 							sprintf(buffer,"RECOMMENDER NOT FOUND IN DATABASE");
 							send(newSocket,buffer,sizeof(buffer),0);
 
 						}
 						
 					}
+					bzero(buffer,sizeof(buffer));
 					
 				}
 				else if(strcmp(buffer, "search") == 0){
+					char location[1024];
+					char status[1024];
 					recv(newSocket,district,1024,0);
 					recv(newSocket,buffer,1024,0);
+					puts(district);
+					puts(buffer);
 
-					char location[1024];
-					sprintf(location,"UFT/storage/app/enrollments/%s.txt",district);
+				
+					sprintf(location,"UFT/storage/app/search/enrollments/%s.txt",district);
 
 					   //call the search module
-					checker(newSocket,location,buffer,district);
+					checker(newSocket,location,buffer,district,status);
+					bzero(buffer,sizeof(buffer));
 
 				}
 				else if(strcmp(buffer, "check_status") == 0){
 					bzero(buffer,sizeof(buffer));
+					char status[1024];
+					sprintf(status,"ok");
+					char location[1024];
 					recv(newSocket,district, sizeof(district),0);
 					recv(newSocket, user, sizeof(user),0);
-					
+					sprintf(location,"UFT/storage/app/status/%s.txt",district);
+					checker(newSocket,location,user,district,status);
 
 					
-
+                   bzero(buffer,sizeof(buffer));
 				}
 				else if(strcmp(buffer, "get_statement") == 0){
+					char status[1024];
 					recv(newSocket,district, sizeof(district),0);
 					recv(newSocket, user, sizeof(user),0);
 
 					char location[1024];
 					sprintf(location,"UFT/storage/app/payments/%s.txt",district);
 					//call the search module
-				    checker(newSocket,location,user,district);
+				    checker(newSocket,location,user,district,status);
+					bzero(buffer,sizeof(buffer));
 				}
+				else if(strcmp(buffer, "Approve") == 0){
+					char signchecker[1024];
+					strcpy(signchecker,"approve");
+					char data[1024];
+					recv(newSocket,user, sizeof(user),0);
+					recv(newSocket,district, sizeof(district),0);
+					recv(newSocket,password, sizeof(password),0);
+					sprintf(data,"%s:%s",user,password);
+					addmember(data,district,cdate,user,signchecker);
 
+					bzero(buffer,sizeof(buffer));
+				}
+				
+				else if(strcmp(buffer, "correct") == 0){
+					bzero(buffer,sizeof(buffer));
+				    recv(newSocket,user, sizeof(user),0);
+					recv(newSocket,district, sizeof(district),0);
+					recv(newSocket,password, sizeof(password),0);
+			
+					char location[1024];
+					sprintf(location,"UFT/storage/app/enrollments/%s.sign",district);
+          
+		            //call to replaceAll module
+					replaceAll(buffer,password,location,user);
+					sprintf(buffer,"FILE RE-SIGN SUCCESSFULL");
+					send(newSocket,buffer,sizeof(buffer),0);
+
+					bzero(buffer,sizeof(buffer));
+				}
+				
 				else if(strcmp(buffer, "exit") == 0){
 					printf("Disconnected from %s:%d\n", inet_ntoa(newAddr.sin_addr), ntohs(newAddr.sin_port));
+					break;
 				}
+
 			}
 		}
 
