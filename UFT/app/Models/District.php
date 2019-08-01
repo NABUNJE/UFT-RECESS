@@ -94,4 +94,10 @@ class District extends Model
     ];
 
 
+    public function agent(){
+        return $this->hasMany('App/Models/Agent');
+    }
+    public function member(){
+        return $this->hasMany('App/Models/Member');
+    }
 }

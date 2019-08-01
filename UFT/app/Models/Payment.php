@@ -89,5 +89,11 @@ class Payment extends Model
         'Role' => 'required'
     ];
 
+    public function agent(){
+        return $this->belongsTo('App/Models/Agent');
+    }
 
+    public function treasury(){
+        return $this->belongsTo('App/Models/Treasury');
+    }
 }

@@ -57,7 +57,7 @@ class Treasury extends Model
     use SoftDeletes;
 
     public $table = 'treasury';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -94,5 +94,7 @@ class Treasury extends Model
         'received_on' => 'required'
     ];
 
-    
+    public function payment(){
+        return $this->hasMany('App/Models/Payment');
+    }
 }

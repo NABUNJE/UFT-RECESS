@@ -107,4 +107,15 @@ class Agent extends Model
     ];
 
 
+    public function district(){
+        return $this->belongsTo('App/Models/District');
+    }
+    public function member(){
+        return $this->hasMany('App/Modes/Member');
+
+    }
+    public function payment(){
+        return $this -> hasMany('App/Model/Payment');
+    }
+
 }

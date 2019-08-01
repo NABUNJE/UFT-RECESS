@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAgentsTable extends Migration
+class CreateMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,16 @@ class CreateAgentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('agents', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('members', function (Blueprint $table) {
+            $table->string('id')->unique();
             $table->string('name');
             $table->string('district');
-            $table->string('role')->default('Agent');
-            $table->unsignedDecimal('salary',12,2)->default(0);
-            $table->string('signature');
+            $table->foreign('district')->references('name')->on('districts');
+            $table->string('recommender')->nullable();
+            $table->date('DateOfEnroll');
+            $table->string('agent');
+            $table->enum('gender',['F','M']);
+            $table->foreign('agent')->references('name')->on('agents');
             $table->softDeletes('deleted_at');
             $table->timestamps();
         });
@@ -32,6 +35,6 @@ class CreateAgentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('agents');
+        Schema::dropIfExists('members');
     }
 }

@@ -18,7 +18,7 @@ class PaymentDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'payments.datatables_actions');
+        return $dataTable;
     }
 
     /**
@@ -42,7 +42,6 @@ class PaymentDataTable extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->addAction(['width' => '120px', 'printable' => false])
             ->parameters([
                 'dom'       => 'Bfrtip',
                 'stateSave' => true,

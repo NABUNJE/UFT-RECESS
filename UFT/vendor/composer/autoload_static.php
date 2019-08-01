@@ -674,7 +674,6 @@ class ComposerStaticInit8e365553466926d9b5db636ee4d8c471
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
-        'App\\Repositories\\AdministratorRepository' => __DIR__ . '/../..' . '/app/Repositories/AdministratorRepository.php',
         'App\\Repositories\\AgentRepository' => __DIR__ . '/../..' . '/app/Repositories/AgentRepository.php',
         'App\\Repositories\\BaseRepository' => __DIR__ . '/../..' . '/app/Repositories/BaseRepository.php',
         'App\\Repositories\\DistrictRepository' => __DIR__ . '/../..' . '/app/Repositories/DistrictRepository.php',

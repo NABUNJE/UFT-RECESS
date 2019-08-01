@@ -98,7 +98,7 @@
                                 <!-- small box -->
                                 <div class="small-box bg-maroon">
                                     <div class="inner">
-                                    <h3>GRAPHS</h3>
+                                    <h3>STAT</h3></h3>
 
                                     <p>UFT</p>
                                     </div>

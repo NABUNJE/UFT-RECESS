@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTreasuryTable extends Migration
+class CreatePaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateTreasuryTable extends Migration
      */
     public function up()
     {
-        Schema::create('treasury', function (Blueprint $table) {
-            $table->bigIncrements('id')->index();
-            $table->unsignedDecimal('amount',12,2);
-            $table->string('well_wisher');
-            $table->date('received_on');
+        Schema::create('payments', function (Blueprint $table) {
+            $table->string('Role')->unique();
+            $table->unsignedDecimal('Salary',12,2)->default(0);
+            $table->integer('Number')->nullable();
+            $table->unsignedDecimal('Total',12,2)->default(0);
+
             $table->softDeletes('deleted_at');
             $table->timestamps();
         });
@@ -30,6 +31,6 @@ class CreateTreasuryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('treasury');
+        Schema::dropIfExists('payments');
     }
 }

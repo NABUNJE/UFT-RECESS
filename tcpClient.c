@@ -15,16 +15,15 @@
 void receiver(int clientSocket,char buffer[],char district[]){
 	send(clientSocket,district,1024,0);
 	send(clientSocket, buffer,1024, 0);
-	bzero(buffer,1024);
-	char filex[1024];
 	int ch = 0;
+	int words;
+
 	//receive search data from the server
-	recv(clientSocket, filex, 1024,0);				
-	int words = atoi(filex); //string to int conversion
-	
+	recv(clientSocket,&words,sizeof(int),0);
+	printf("%d\n",words);				
 	while(ch != words){
 		recv(clientSocket, buffer, 1024, 0);
-		printf("%s\n",buffer);
+		puts(buffer);
 		ch++;
 	}
 }
@@ -43,7 +42,7 @@ void ltrim(char str[])
         strcpy(str, buf);
 }
 
-void sign(){
+void sign(char password[]){
 	char *str;
 	int total=0;
 	char *key[2][26] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "010101101111101", "110101110101110", "001010100010001", "110101101101110", "111100111100111", "111101111100100", "001010100011010", "101101111101101", "111010010010111", "111010010010110", "101110100110101", "100100100100111", "101111101101101", "010101101101101","010101101101010" ,"110101110100100","010101101111011","110101110101101","111100111001111","111010010010010","101101101101111","101101101101010","101101101111101","101101010101101","101101111001111","111001010100111"};
@@ -60,7 +59,7 @@ void sign(){
 				total += sizeof(sign[i][j]);
                 continue;
 			}
-			printf("WRONG INPUT\n");
+			puts("WRONG INPUT");
 			
         }
     }
@@ -92,7 +91,7 @@ void sign(){
             }
         }
     }
-    printf("%s\n",str);
+    puts(str);
 	for (int i = 0; i < 5; i++)
     {
         for (int j = 0; j < 3; j++)
@@ -101,7 +100,6 @@ void sign(){
         }
     }
  int found = 0;
-    char password[2];
     for (int n = 0; n < 26; n++)
     {
         if (strcmp(key[1][n], str) == 0)
@@ -111,11 +109,13 @@ void sign(){
             break;
         }
     }
-    if (found = 0)
+    if (found == 0)
     {
-        printf("Wrong password was entered\n");
+        puts("Wrong password was entered");
     }
+	else{
     printf("your password is: %s \n", password);
+	}
     free(str);
    // return 0;
 
@@ -129,10 +129,10 @@ int main(){
 
 	clientSocket = socket(AF_INET, SOCK_STREAM, 0);
 	if(clientSocket < 0){
-		printf("[-]Error in connection.\n");
+		puts("[-]Error in connection.");
 		exit(1);
 	}
-	printf("[+]Client Socket is created.\n");
+	puts("[+]Client Socket is created.");
 
 	memset(&serverAddr, '\0', sizeof(serverAddr));
 	serverAddr.sin_family = AF_INET;
@@ -141,7 +141,7 @@ int main(){
 
 	ret = connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
 	if(ret < 0){
-		printf("[-]Error in connection.\n");
+		puts("[-]Error in connection.");
 		exit(1);
 	}
 
@@ -156,77 +156,118 @@ int main(){
 
     char district[1024];
 	char user[1024];
+	char password[10];
     printf("\nENTER DISTRICT:\t");
 	scanf("%s",district);
+	
 	printf("\nENTER USER NAME:");
     scanf("%s",user);
+
 	while(1){
 		char buffer[1024];
 
 		bzero(buffer,sizeof(buffer));
+
 		printf("\nCOMMAND:-> \t");
 		scanf("%s", &buffer[0]);
 
 		if(strcmp(buffer, "exit") == 0){
-			puts("PLIZ SIGN LIST BEFORE LOGGING OUT");
-			sign();//calling the sign module
 			send(clientSocket, buffer, strlen(buffer), 0);
 			close(clientSocket);
-			printf("[-]Disconnected from server.\n");
+			puts("[-]Disconnected from server.");
 			exit(1);
 		}
+	    else if(strcmp(buffer, "Approve") == 0){
+			send(clientSocket, buffer, sizeof(buffer), 0);
+			send(clientSocket, user, sizeof(user), 0);
+			send(clientSocket, district, sizeof(district), 0);
+			sign(password);//calling the sign module
+            send(clientSocket, password, sizeof(password), 0);
+
+			puts(password);
+		}
+		
 		else if(strcmp(buffer, "Addmember") == 0){
 			send(clientSocket,buffer,1024,0);
 			send(clientSocket,district,sizeof(district),0);
+			send(clientSocket,user,sizeof(user),0);
 			scanf("%[^\n]s",buffer);
-			char *file = buffer;
-			ltrim(file);//trimming
+			ltrim(buffer);//trimming
+		    int words = 0;
 			FILE *fp;
-			int words = 0;
-			fp =fopen(file, "r");
-			if(fp == NULL){
+			fp =fopen(buffer, "r");
+   			if(fp == NULL){
 				send(clientSocket,buffer,1024,0);
 				recv(clientSocket,buffer,1024,0);
-				printf("%s\n",buffer);
+				printf("\nRESPONSE:");
+				puts(buffer);
 			}
 			else{  
 				bzero(buffer,sizeof(buffer));
-				file = "file";
+				char file[1024] = "file";
 				send(clientSocket,file,sizeof(file),0);
 				while(fgets(buffer,1024,fp)!=NULL){
 					words++;
 				}
 				printf("%d\n",words);
-				
-				char size[1024];
-				sprintf(size,"%d",words);//int to string convertion
-				send(clientSocket, size, sizeof(size),0);
+				send(clientSocket, &words, sizeof(int),0);
 				rewind(fp);
 
 				char ch;
 				while(fgets(buffer,1024,fp)!= NULL){
+				    int totalRead = strlen(buffer);
+				    buffer[totalRead - 1] = buffer[totalRead - 1] == '\n' ? '\0' : buffer[totalRead - 1];
 					send(clientSocket,buffer,1024,0);
+					recv(clientSocket,buffer,1024,0);
+					puts(buffer);
 		 			
 				}
 				fclose(fp);
-               printf("sent successfully\n");
+               puts("sent successfully");
 
 			}
 		}	
 		
 		else if(strcmp(buffer, "search") == 0){
+			puts(buffer);
 			send(clientSocket, buffer, strlen(buffer), 0);
 			scanf("%s",buffer);
 			ltrim(buffer);
+			puts(buffer);
 
 			//receiver module
             receiver(clientSocket,buffer,district);
 		}
 		else if(strcmp(buffer, "check_status") == 0){
+			char message[1024];
 			send(clientSocket, buffer, sizeof(buffer), 0);
 			send(clientSocket, district, sizeof(district), 0);
 			send(clientSocket, user, sizeof(user), 0);
+			recv(clientSocket, message, sizeof(message), 0);
 
+			if(strcmp(message,"change") == 0){
+				bzero(buffer,sizeof(buffer));
+				recv(clientSocket, message, sizeof(message), 0);
+				puts(message);
+				puts("PLEASE RE-ENTER PASSWORD");
+				sign(password);
+				
+				char correct[1024];
+				sprintf(correct,"%s:%s",user,password);
+				sprintf(buffer,"correct");
+				send(clientSocket,buffer, sizeof(buffer), 0);
+			    send(clientSocket,user, sizeof(user),0);
+				send(clientSocket,district, sizeof(district),0);
+				send(clientSocket,correct, sizeof(correct),0);
+				recv(clientSocket,buffer, sizeof(buffer), 0);
+				puts(buffer);
+				bzero(buffer,sizeof(buffer));
+			
+			}
+			else{
+				puts(message);
+			}
+        bzero(buffer,sizeof(buffer));
 
 		}
 		else if(strcmp(buffer, "get_statement") == 0){
@@ -236,7 +277,7 @@ int main(){
             receiver(clientSocket,user,district);
 		}
 		else{
-			printf("[-]ERROR: INVALID COMMAND \n");
+			puts("[-]ERROR: INVALID COMMAND");
 		}
 
  
