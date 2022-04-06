@@ -13,7 +13,7 @@
         "barryvdh/laravel-snappy": "^0.4.4",
         "consoletvs/charts": "5.*",
         "doctrine/dbal": "~2.3",
-        "dompdf/dompdf": "^0.8.3",
+        "dompdf/dompdf": "^1.2.1",
         "fideloper/proxy": "^4.0",
         "infyomlabs/adminlte-templates": "5.8.x-dev",
         "infyomlabs/laravel-generator": "5.8.x-dev",
